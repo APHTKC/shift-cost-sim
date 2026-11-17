@@ -1,0 +1,14 @@
+{
+  "source": "Google Finance",
+  "base": "TWD",
+  "quotes": {
+    "USD": {
+      "rate": 0.03029844,
+      "quotedAt": "2026-11-17T05:19:00.000Z"
+    },
+    "JPY": {
+      "rate": 4.823395,
+      "quotedAt": "2026-11-17T05:18:00.000Z"
+    }
+  }
+}
