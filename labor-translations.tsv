@@ -1,0 +1,105 @@
+台灣勞動法規與排班檢核	Taiwan Labor Rules & Roster Review	台湾の労働法令と勤務表の確認
+飯店與餐飲業的四週變形工時	Four-week flexible working hours for hotels and food service	ホテル・飲食業の4週間変形労働時間制
+適用條件	Eligibility	適用条件
+28 日班表	28-day roster	28日間の勤務表
+條文與來源	Statutes and sources	条文と出典
+確認適用條件	Verify eligibility	適用条件の確認
+依實際聘僱員工的事業單位確認行業別。飯店餐廳與商場餐廳是成本情境，行業別仍由實際雇主決定。	Confirm the industry of the entity that employs the worker. Hotel and mall are cost scenarios. Use the actual employer's industry for this check.	従業員を実際に雇用する事業者の業種を確認します。ホテル・商業施設の区分は費用試算用です。適用判定には実際の雇用主の業種を使用してください。
+雇主行業別	Employer industry	雇用主の業種
+請選擇	Select an option	選択してください
+觀光旅館業	Tourist hotel industry	観光ホテル業
+一般旅館業	General hotel industry	一般ホテル業
+餐飲業	Food and beverage service	飲食業
+其他或尚未確認	Other or unconfirmed	その他・未確認
+事業單位有工會	Employer has a labor union	事業所に労働組合がある
+四週工時制度的同意紀錄	Four-week schedule consent	4週間制度の同意記録
+尚未確認	Unconfirmed	未確認
+已取得工會同意	Labor union consent obtained	労働組合の同意を取得済み
+已取得勞資會議同意	Labor-management conference consent obtained	労使会議の同意を取得済み
+正常工時週期起日	Agreed cycle start date	合意した周期の開始日
+已依輸入確認指定行業與相符同意程序。請接續檢查班表。	The selected industry and consent match the eligibility criteria. Continue to the roster check.	入力した業種と同意手続が適用条件に該当します。勤務表の確認へ進んでください。
+尚未確認適用條件：請選擇指定行業及與有無工會相符的同意程序。	Eligibility unconfirmed. Select a designated industry and the consent procedure that matches union status.	適用条件は未確認です。指定業種および労働組合の有無に応じた同意手続を選択してください。
+第 30 條之 1 的同意程序依有無工會判定。雙方議定週期起迄，按曆日連續計算，跨月時延續同一週期。	Article 30-1 bases consent on union status. The parties agree on the cycle dates. Count consecutive calendar days, including across month boundaries.	第30条の1の同意手続は労働組合の有無に応じます。労使で周期の開始・終了を定め、月をまたいでも暦日で連続して計算します。
+指定行業與同意程序來源	Source for designated industries and consent	指定業種と同意手続の出典
+逐人班表檢核	Individual roster review	従業員別の勤務表確認
+每次檢查一位員工的 28 日班表。選擇每日類型，輸入實際工作區間（排除休息），並填入其中的正常工時。加班時數由工作區間與正常工時的差額推算。	Check one employee's 28-day roster at a time. Select each day type, enter actual work intervals excluding breaks, and specify regular hours. Overtime is the difference between hours worked and regular hours.	1人分の28日間の勤務表を確認します。日区分と休憩を除いた勤務区間を入力し、そのうちの所定労働時間を指定します。実労働時間と所定労働時間の差を時間外労働として算出します。
+區間範例	Example	入力例
+以逗號分隔各工作區間。夜班請以起班日輸入，例如 22:00-02:00。只允許跨入下一日一次。日期請依正式工時週期填寫。	Separate work intervals with commas. Enter overnight work on the day it starts, for example 22:00-02:00. One midnight crossing is supported. Use the dates of the agreed cycle.	勤務区間をカンマで区切ります。夜勤は開始日に入力します（例：22:00-02:00）。翌日への繰越は1回までです。合意した周期の日付を使用してください。
+載入 8 小時範例	Load 8-hour example	8時間勤務の例を表示
+載入 10 小時範例	Load 10-hour example	10時間勤務の例を表示
+清空班表	Clear roster	勤務表を消去
+日次	Cycle day	周期内の日数
+日期	Date	日付
+日別	Day type	日区分
+工作區間	Work intervals	勤務区間
+工作區間（24 小時制）	Work intervals (24-hour clock)	勤務区間（24時間表記）
+正常工時	Regular hours	所定労働時間
+實際工時	Hours worked	実労働時間
+延長工時	Overtime hours	時間外労働時間
+工作日	Workday	勤務日
+例假	Regular day off	法定休日（例假）
+休息日	Rest day	休息日
+空班日	Unscheduled day	勤務なしの日（空班日）
+檢查班表	Check roster	勤務表を確認
+匯出檢核 CSV	Export roster check CSV	勤務表チェックCSV
+檢核結果	Review results	確認結果
+檢核採一般規則。換班間隔以相鄰班次間至少 11 小時初篩。跨週期班次、整月與三個月加班合計、特殊例外、國定假日出勤及工資需依完整紀錄覆核。當 28 日範圍內已超過某月 46 小時，系統會提醒查核額外同意及上限。班表只儲存在目前瀏覽器，請以員工代碼管理，不必填姓名。	The screening applies general rules, including an 11-hour gap between consecutive shifts. Review cross-cycle shifts, monthly and three-month overtime totals, exceptions, national holidays and pay against complete records. A start-date monthly subtotal above 46 hours prompts a review of consent and limits. The roster stays in this browser. No employee name is required.	一般規則で確認し、隣接シフトの間隔は11時間を目安に抽出します。周期をまたぐ勤務、月・3か月単位の時間外労働、例外、祝日出勤、賃金は全記録で確認してください。開始日ベースの月別小計が46時間を超える場合は同意と上限を確認します。勤務表はブラウザー内に保存され、氏名入力は不要です。
+以下為條文摘要。切換語言時，摘要、檢核欄位和參考來源說明同步更新。法規適用以官方中文原文為準。	The summaries, review controls and source descriptions update when the language changes. The official Chinese text governs legal application.	言語を切り替えると、条文の要旨、確認項目、出典の説明が切り替わります。法令の適用には公式の中国語原文を参照してください。
+條文	Provision	条文
+工時與排班規則	Working-time and roster rule	労働時間・勤務表の規則
+官方來源	Official source	公式出典
+第 30 條及第 30 條之 1	Articles 30 and 30-1	第30条・第30条の1
+一般正常工時每日 8 小時、每週 40 小時。指定行業經法定程序同意後，得在四週內重分配正常工時，每日最多增加 2 小時，四週正常工時最多 160 小時。每日正常工時達 10 小時時，當日加班不超過 2 小時。	Standard regular hours are capped at eight a day and 40 a week. With the required consent, designated industries may redistribute hours over four weeks, adding up to two regular hours per day within a 160-hour cycle. Ten regular hours in one day allow at most two overtime hours.	通常の労働時間は1日8時間・週40時間が上限です。指定業種では所定の同意を得て4週間内で再配分でき、1日の追加は2時間まで、4週間の上限は160時間です。所定労働時間が10時間の日の時間外労働は2時間までです。
+勞基法第 30 條之 1	Labor Standards Act, Article 30-1	労働基準法 第30条の1
+手冊	Handbook	手引き
+第 36 條第 2 項第 3 款	Article 36(2)(3)	第36条第2項第3号
+四週週期的每個兩週區段至少 2 日例假，四週內例假加休息日至少 8 日。空班日另列。	Each two-week block requires at least two regular days off. The four-week cycle requires at least eight regular days off and rest days combined. Track unscheduled days separately.	各2週間の区間に法定休日（例假）が2日以上必要です。4週間の法定休日と休息日の合計は8日以上です。空班日は別に扱います。
+勞基法第 36 條	Labor Standards Act, Article 36	労働基準法 第36条
+第 34 條	Article 34	第34条
+輪班勞工更換班次時，原則上至少有連續 11 小時休息。公告例外有適用範圍與程序。	Rotating-shift workers generally receive 11 consecutive hours off when changing shifts. Published exceptions have specific scope and procedures.	交替制勤務でシフトを変更する場合、原則として連続11時間以上の休息が必要です。告示の例外には適用範囲と手続があります。
+勞基法第 34 條	Labor Standards Act, Article 34	労働基準法 第34条
+第 35 條	Article 35	第35条
+連續工作每 4 小時原則上至少休息 30 分鐘。輪班、連續性或緊急性工作可依條件另行調配休息。	Provide at least 30 minutes of rest after four consecutive hours of work as a general rule. Shift, continuous or urgent work can qualify for adjusted breaks.	原則として連続4時間の勤務ごとに30分以上の休憩が必要です。交替制、連続性または緊急性のある業務では条件に従って休憩を調整できます。
+勞基法第 35 條	Labor Standards Act, Article 35	労働基準法 第35条
+第 24、32、36、39 條	Articles 24, 32, 36 and 39	第24・32・36・39条
+一般日正常工時與加班合計上限 12 小時，原則上每月加班不超過 46 小時。符合法定程序的例外上限為每月 54 小時且每三個月 138 小時，僱用 30 人以上者須備查。休息日出勤計入法定延長工時，並應依日別核對加給及補休。	Regular and overtime hours generally total no more than 12 per day. Monthly overtime generally caps at 46 hours. With the required process, the exception caps are 54 hours monthly and 138 over three months. Employers with at least 30 workers must file when using that exception. Rest-day work counts toward overtime. Verify pay and compensatory leave by day type.	通常、所定労働と時間外労働の合計は1日12時間まで、時間外労働は月46時間までです。法定手続を経た例外の上限は月54時間かつ3か月138時間で、従業員30人以上の事業主には届出が必要です。休息日の勤務は時間外労働に算入し、日区分ごとに割増賃金と代休を確認します。
+勞基法第 32 條	Labor Standards Act, Article 32	労働基準法 第32条
+完整條文	Full Act	条文全文
+勞動部｜工時制度及工作彈性化措施介紹	Ministry of Labor | Working hours and flexibility	台湾労働部｜労働時間制度と柔軟化措置
+指定行業清單（PDF）	Designated industry list (PDF)	指定業種一覧（PDF）
+觀光旅館業（87.02.05 勞動2字第003088號函）、餐飲業（88.01.29 勞動2字第001359號函）、一般旅館業（88.05.19 勞動2字第022656號函）。	Tourist hotels (5 Feb 1998, Labor-2 No. 003088), food service (29 Jan 1999, No. 001359), and general hotels (19 May 1999, No. 022656).	観光ホテル業（1998年2月5日 労動2字第003088号）、飲食業（1999年1月29日 第001359号）、一般ホテル業（1999年5月19日 第022656号）。
+勞動部｜工時制度及彈性措施手冊（2025）	Ministry of Labor | Working Hours and Flexibility Handbook (2025)	台湾労働部｜労働時間制度と柔軟化措置の手引き（2025年）
+第 7–8 頁有四週工時的排班範例，附錄一列出指定行業和函號。	Pages 7–8 show a four-week roster example. Appendix 1 lists designated industries and circular numbers.	7～8ページに4週間の勤務表例があり、付録1に指定業種と通達番号が記載されています。
+全國法規資料庫｜勞動基準法中文全文	Laws and Regulations Database | Labor Standards Act in Chinese	全国法規資料庫｜労働基準法の中国語全文
+勞動基準法官方英文版	Official English text of the Labor Standards Act	労働基準法の公式英訳
+資料查核日 2026-11-16。此頁採四週工時的一般規則。成本模擬的標準班型仍以原模型換算，新班表有加班或休息日出勤時，請另將加給納入預算。	Sources checked on 2026-11-16. This page applies general four-week scheduling rules. The simulator retains its original standard shifts. Add overtime or rest-day premiums to the budget where applicable.	出典確認日：2026-11-16。このページは4週間勤務の一般規則を適用します。費用試算は元の標準シフトを使用します。時間外・休息日出勤の割増賃金は別途予算に反映してください。
+第 {0} 日｜{1}	Day {0} · {1}	第{0}日｜{1}
+第 {0} 日｜	Day {0} ·	第{0}日｜
+四週正常工時 {0} 小時	Regular hours in cycle: {0}	4週間の所定労働時間：{0}時間
+前兩週例假 {0} 日	Regular days off, first two weeks: {0}	前半2週間の法定休日：{0}日
+後兩週例假 {0} 日	Regular days off, last two weeks: {0}	後半2週間の法定休日：{0}日
+例假及休息日 {0} 日	Regular days off plus rest days: {0}	法定休日と休息日の合計：{0}日
+本班表通過本頁列出的初步檢查。請用完整出勤與薪資紀錄覆核。	This roster passes the checks listed on this page. Confirm against complete attendance and payroll records.	この勤務表は本ページの一次確認を通過しました。完全な勤怠記録と賃金台帳で確認してください。
+有 {0} 項需要修正或人工確認。	{0} items need correction or manual review.	{0}件の修正または個別確認が必要です。
+四週變形工時的行業別或同意程序尚未確認。	The eligible industry or consent procedure is unconfirmed.	4週間制度の適用業種または同意手続が未確認です。
+請填寫雙方議定的工時週期起日。	Enter the agreed cycle start date.	労使で合意した周期の開始日を入力してください。
+請選擇日別。	Choose the day type.	日区分を選択してください。
+工作區間格式錯誤或時段重疊。	Work intervals are invalid or overlap.	勤務区間の形式に誤りがあるか、区間が重複しています。
+工作日請填寫工作區間。	Enter work intervals for a workday.	勤務日の勤務区間を入力してください。
+例假或空班日有工作，請人工確認日別與出勤依據。	Work is recorded on a regular day off or an unscheduled day. Review the day type and basis for working.	法定休日または空班日に勤務記録があります。日区分と出勤の根拠を確認してください。
+此日別的正常工時應填 0。	Enter zero regular hours for this day type.	この日区分の所定労働時間は0と入力してください。
+正常工時請填 0 至實際工時之間。	Enter regular hours from zero up to hours worked.	所定労働時間は0から実労働時間までの範囲で入力してください。
+正常工時超過每日 10 小時。	Regular hours exceed the 10-hour daily limit.	所定労働時間が1日10時間を超えています。
+正常工時達 10 小時，延長工時超過 2 小時。	With 10 regular hours, overtime exceeds the two-hour limit.	所定労働時間が10時間の日に、時間外労働が2時間を超えています。
+實際工時超過每日 12 小時。	Hours worked exceed the 12-hour daily limit.	実労働時間が1日12時間を超えています。
+休息日有出勤，應核對延長工時、出勤程序與加給。	Rest-day work is recorded. Check overtime, procedure and premium pay.	休息日に出勤しています。時間外労働、手続、割増賃金を確認してください。
+連續工作超過 4 小時，未見至少 30 分鐘休息，請核對是否有適用例外。	More than four consecutive hours are recorded without a 30-minute break. Check whether an exception applies.	30分以上の休憩を挟まず4時間を超えて勤務しています。例外の適用を確認してください。
+班次與前一班重疊。	This shift overlaps the preceding shift.	前のシフトと重複しています。
+與前一班間距未滿 11 小時，請核對是否為輪班換班及是否有適用例外。	The gap from the previous shift is under 11 hours. Check whether this is a rotating-shift change and whether an exception applies.	前のシフトから11時間未満です。交替制勤務のシフト変更に該当するか、例外の適用があるかを確認してください。
+四週正常工時合計超過 160 小時。	Regular hours exceed 160 over the four-week cycle.	4週間の所定労働時間が160時間を超えています。
+前兩週例假少於 2 日。	The first two weeks have fewer than two regular days off.	前半2週間の法定休日が2日未満です。
+後兩週例假少於 2 日。	The last two weeks have fewer than two regular days off.	後半2週間の法定休日が2日未満です。
+四週例假與休息日合計少於 8 日。	The cycle has fewer than eight regular days off and rest days combined.	4週間の法定休日と休息日の合計が8日未満です。
+{0}：此班表已列超過 46 小時延長工時，請核對起班日歸屬、完整月份、同意與備查。	{0}: This roster records over 46 overtime hours by shift start date. Confirm the correct allocation, full month, consent and filing.	{0}：開始日ベースの時間外労働が46時間を超えています。日付の帰属、月間全体、同意および届出を確認してください。
+四週變形工時班表檢核.csv	four-week-roster-review.csv	4週間勤務表チェック.csv
+確定清空班表？	Clear this roster?	勤務表を消去しますか？

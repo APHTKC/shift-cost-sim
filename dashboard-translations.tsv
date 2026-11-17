@@ -1,0 +1,292 @@
+餐飲部門｜一頭班改制成本模擬平台	F&B | Shift Cost Simulator	料飲部門｜勤務シフト人件費シミュレーター
+飯店餐飲營運管理	Hotel Food & Beverage Operations	ホテル料飲部門の運営管理
+一頭班人力成本模擬	Shift Cost Simulator	通し勤務の人件費試算
+比較兩頭班、全正職一頭班與正職＋計時混合制	Compare split shifts, full-time continuous shifts and mixed staffing.	中抜け勤務、正社員による通し勤務、正社員とパートの併用を比較します。
+金額以新台幣計	All amounts in TWD	金額は台湾ドル（TWD）
+模擬情境	Staffing scenarios	勤務シナリオ
+設定與試算資料儲存在目前瀏覽器。	Settings and calculations stay in this browser.	設定と試算データはこのブラウザーに保存されます。
+＋新增餐廳／單位	＋ Add outlet	＋ 店舗・部門を追加
+匯出 CSV	Export CSV	CSV出力
+備份 JSON	Back up JSON	JSONバックアップ
+匯入 JSON	Import JSON	JSON取込
+列印報告	Print report	レポートを印刷
+試算模式	Simulation mode	試算モード
+快速試算｜簡易版	Quick estimate	簡易試算
+分時段試算｜詳細版	Detailed scheduling	時間帯別の詳細試算
+餐種情境｜模擬版	Restaurant scenarios	業態別シミュレーション
+簡易版：沿用午晚餐各4小時的快速假設，適合主管初步比較。	Quick estimate assumes four hours each for lunch and dinner.	ランチとディナーを各4時間と仮定し、概算を比較します。
+詳細版：內外場獨立逐半小時需求、班次與休息時間，並檢查人力覆蓋、對比現況FTE。	Model staffing and breaks in 30-minute slots for service and kitchen teams, then compare coverage and FTE.	ホールと厨房別に30分単位の必要人数・勤務・休憩を設定し、充足状況とFTEを比較します。
+情境版：先選餐種、場域、座位及服務權重，再按「執行模擬」，生成平假日內外場需求及新制成本。	Choose the restaurant format, venue, seats and workload weights, then run a weekday and weekend simulation.	業態、営業場所、席数、業務負荷を設定し、平日・週末の必要人数とコストを試算します。
+總覽指標	Key metrics	主要指標
+現況每月人事成本	Current monthly labor cost	現行の月間人件費
+混合班制｜每月新增	Mixed staffing · monthly increase	併用勤務｜月間増加額
+全正職制｜每月新增	Full-time only · monthly increase	正社員のみ｜月間増加額
+混合班制｜每年新增	Mixed staffing · annual increase	併用勤務｜年間増加額
+詳細新制｜每月增減	New schedule · monthly change	新シフト｜月間増減額
+詳細新制｜每月總成本	New schedule · monthly total	新シフト｜月間合計
+詳細新制｜每年增減	New schedule · annual change	新シフト｜年間増減額
+共通成本假設	Shared cost assumptions	共通コスト前提
+這些為新增內外場時帶入的預設值；每個餐廳的內場與外場均可各自覆寫正職月薪、計時時薪及排班需求。附加成本比例全館共用。	Set defaults for new outlets. Salary, hourly pay and staffing can be edited by team. Employer burden rates apply across the hotel.	新規店舗の初期値です。月給・時給・必要人数は部門別に変更できます。付帯費率は全館共通です。
+正職平均月薪（元）	Average full-time monthly pay (TWD)	正社員の平均月給（TWD）
+可用各單位平均月薪	Use the outlet average.	店舗の平均月給を使用できます。
+正職附加成本（%）	Full-time employer burden (%)	正社員付帯費率（%）
+雇主負擔、福利等	Employer contributions and benefits	事業主負担、福利厚生等
+計時時薪（元）	Part-time hourly pay (TWD)	パート時給（TWD）
+依實際招募價格填寫	Use actual hiring rates.	実際の採用時給を入力します。
+計時附加成本（%）	Part-time employer burden (%)	パート付帯費率（%）
+保險、勞退與其他負擔	Insurance, pension and other costs	保険、退職金積立など
+年換算週數	Weeks per year	年間換算週数
+預設 52 週；每月除以 12	Defaults to 52 weeks per year, divided by 12 for monthly costs.	標準は年52週。月間換算は12で割ります。
+餐廳與排班設定	Outlets and shift settings	店舗・勤務シフト設定
+每個餐廳分為外場與內場，分別設定餐期人數、薪資及計時支援；營業天數為餐廳共用。	Set lunch and dinner staffing, pay and part-time support separately for front and back of house. Operating days are shared.	ホールと厨房で食事時間帯の人数・給与・パート応援を設定します。営業日数は店舗で共通です。
+恢復示範資料	Restore sample data	サンプルデータに戻す
+模型邊界：	Model assumptions	試算の前提
+外場與內場已獨立計算，但仍採「午晚各4小時、每餐期同樣人數」的標準基準。全正職制假設兩餐期完全由不同正職組別負責、所以人力倍增；混合制維持原正職人數並增加指定計時工時。模型尚未自動驗證時段覆蓋，也未估算額外工作內容；實施前須確認實際班表。	Each team uses the same staffing at lunch and dinner, with four hours per service. The full-time scenario assumes separate crews for each service. Mixed staffing retains existing full-time staff and adds part-time hours. Use the detailed schedule to check coverage and account for additional work.	各部門で昼・夜とも同じ人数、各4時間と仮定します。正社員案は昼夜別チームを置き、併用案は正社員数を維持してパート時間を追加します。実施前に詳細試算で充足状況と付随業務を確認してください。
+餐廳別成本比較	Cost by outlet	店舗別コスト比較
+增幅皆以「該餐廳原有正職成本」為分母；年度金額採12個月。	Percent changes use current full-time cost as the baseline. Annual amounts use 12 months.	増加率は現行の正社員人件費を基準とし、年間額は12か月で換算します。
+餐廳／單位	Outlet	店舗・部門
+部門	Team	部門
+現況FTE	Current FTE	現行FTE
+原月成本	Current monthly cost	現行月額
+混合制新增/月	Mixed extra / month	併用・月間増加額
+混合制增幅	Mixed change (%)	併用・増加率
+全正職新增/月	Full-time extra / month	正社員・月間増加額
+全正職增幅	Full-time change (%)	正社員・増加率
+混合制新增/年	Mixed extra / year	併用・年間増加額
+全館每月成本對照	Hotel-wide monthly cost	全館月間コスト比較
+將「現況」與「新班制總成本」比較，而非僅比較增額。	Compare total costs under the current and proposed schedules.	現行と新シフトの総額を比較します。
+財務判讀	Financial interpretation	財務面の留意点
+計算方法與適用限制	Method and limits	算出方法と適用範囲
+內場與外場各自計算：現況全職當量（FTE）＝該部門每餐期需求人數 × 每週營業天數 ÷ 5。假設每人每天兩餐期各工作4小時，每週正常工時40小時。	For each team, current FTE = required staff per meal service × operating days per week ÷ 5. Assumes two four-hour services a day and a 40-hour workweek.	部門別の現行FTE＝食事時間帯の必要人数×週営業日数÷5。1日4時間の食事時間帯を2回、週40時間勤務と仮定します。
+各部門現況月成本＝該部門FTE × 該部門正職平均月薪 ×（1＋正職附加成本率）。	Current monthly cost per team = FTE × average full-time monthly pay × (1 + full-time employer burden rate).	部門別現行月額＝FTE×正社員平均月給×（1＋正社員付帯費率）。
+各部門混合制新增月成本＝該部門每餐期人數 × 該部門每日計時補班小時 × 每週營業天數 × 年換算週數 ÷ 12 × 該部門計時時薪 ×（1＋計時附加成本率）。	Mixed staffing monthly increase = staff per service × part-time support hours per person per day × operating days per week × weeks per year ÷ 12 × hourly pay × (1 + part-time employer burden rate).	併用案の月間増加額＝食事時間帯の人数×1人当たり1日のパート補助時間×週営業日数×年間換算週数÷12×時給×（1＋パート付帯費率）。
+全正職制新增成本＝現況月成本。這是「午晚各組人力、不共享」的保守方案，並非所有一頭班都必須倍增。	Additional full-time cost equals existing monthly cost when separate lunch and dinner crews are assumed.	正社員案の増加額＝現行月額。昼と夜に別々のチームを配置する場合の保守的な前提です。
+本模型未單獨計算國定假日出勤、加班、特休及請假替補、招募訓練費、年終獎金、分店薪級差、實際計時最短班長及跨單位調度。若其已列入平均成本或附加成本，不應重複列入。	The model makes no separate allowance for holiday work, overtime, leave cover, hiring and training, bonuses, outlet pay differences, minimum shift lengths or shared staffing. Include each item once if applicable.	祝日出勤、残業、休暇代替、採用・研修費、賞与、店舗間の賃金差、最短勤務時間、店舗間応援は個別に算出していません。必要な項目は重複計上せず反映してください。
+使用於董事會或正式年度預算前，必須根據營運時段與30分鐘人力需求，核實班表是否能覆蓋全部服務時段。	Before using the estimate for board reporting or budgeting, match the roster to operating hours and 30-minute demand.	取締役会資料や年度予算への使用前に、営業時間と30分単位の需要に対する配置を確認してください。
+餐種與場域情境模擬	Restaurant and venue simulation	業態・営業場所別の試算
+餐種 × 場域 × 服務等級｜情境模擬	Restaurant, venue and service mix	業態・営業場所・サービス水準
+根據餐種及營業地點產生平日／假日每30分鐘的外場、內場需求；點「執行模擬」才重新計算。參數為管理估算假設，並非產業標準編制。	Run the simulation to estimate weekday and weekend staffing in 30-minute slots. The inputs are planning assumptions.	試算を実行すると、平日・週末のホール・厨房需要を30分単位で推計します。係数は管理上の試算前提です。
+餐廳種類	Restaurant format	レストラン業態
+All Day Dining｜全日餐廳	All Day Dining	オールデイダイニング
+日料餐廳	Japanese restaurant	日本料理店
+牛排館	Steakhouse	ステーキハウス
+中餐廳	Chinese restaurant	中国料理店
+宴會廳	Banquet hall	宴会場
+營業場域	Venue	営業場所
+百貨公司／商場外部餐廳	Department store / mall outlet	百貨店・商業施設内の店舗
+飯店內餐廳	Hotel restaurant	ホテル内レストラン
+餐廳座位數	Seats	席数
+每週營業天數	Operating days per week	週当たり営業日数
+7 天	7 days	7日
+6 天	6 days	6日
+5 天	5 days	5日
+外場正職平均月薪	Front-of-house average monthly pay	ホール正社員の平均月給
+內場正職平均月薪	Kitchen average monthly pay	厨房正社員の平均月給
+外場計時時薪	Front-of-house part-time hourly pay	ホールのパート時給
+內場計時時薪	Kitchen part-time hourly pay	厨房のパート時給
+每日營業量係數	Daily sales volume multiplier	1日の営業量係数
+服務精緻度權重	Service intensity multiplier	サービス水準の係数
+標準 1.00×	Standard 1.00×	標準 1.00倍
+內場製程複雜度	Kitchen complexity multiplier	調理工程の複雑度
+正職最低工時比例	Target minimum full-time hour share	正社員勤務時間の最低目標比率
+執行模擬	Run simulation	試算を実行
+套用平日需求至詳細版	Use weekday demand in detailed scheduling	平日の需要を詳細試算に適用
+匯出情境明細 CSV	Export scenario CSV	シナリオ明細CSV
+「營業量」調整每餐出餐／服務負荷；「服務精緻度」以外場為主要影響；「內場製程複雜度」主要影響廚房；正職工時比為排班規劃約束，非法律規定。宴會廳以指定座位數視為單場宴會容量，非每天固定滿席。	Volume scales meal workload. Service intensity affects front of house and kitchen complexity affects kitchen staffing. Full-time share is a staffing target. Banquet seats represent capacity per event.	営業量は各食事時間帯の負荷、サービス水準はホール、調理工程は厨房の必要人数に影響します。正社員比率は配置上の目標です。宴会の席数は1件当たりの収容人数です。
+模擬結果｜成本及編制	Simulation results · cost and staffing	試算結果｜コストと人員配置
+日期／部門	Day type / team	日区分・部門
+原兩頭班基準FTE＊	Split-shift baseline FTE*	中抜け勤務の基準FTE＊
+新制正職FTE	New full-time FTE	新シフトの正社員FTE
+新制計時人時／週	New part-time hours / week	新シフトのパート人時／週
+新制月成本	New monthly cost	新シフト月額
+月增減	Monthly change	月間増減額
+人力覆蓋	Staffing coverage	人員充足状況
+＊原兩頭班基準為依需求尖峰反推的「示範編制」，不是飯店既有實際編制。正式報告必須替換成現有人事費及實際FTE。平日／假日按每週營業天數加權。正職薪資採每人每月固定成本；FTE為平均編制需求，需依排休及假勤上修。	*The split-shift baseline is estimated from peak demand. Use actual payroll and FTE for formal reporting. Weekday and weekend costs are weighted by operating days. Allow for time off and cover when translating average FTE into headcount.	＊中抜け勤務の基準はピーク需要から推計した値です。正式な報告には実際の人件費とFTEを使用してください。営業日数で平日・週末を加重します。実人数への換算時には休暇と代替要員を考慮してください。
+人力需求曲線與班次建議	Staffing demand and suggested shifts	必要人数の推移と推奨シフト
+重要假設及限制	Assumptions and limits	重要な前提と制約
+情境成本口徑	Scenario cost basis	シナリオの算定基準
+財務公式與人力覆蓋	Cost formulas and coverage	コストの算式と人員充足
+平日、假日、外場與內場分開計算。現況 FTE＝當日最高需求人數 × 該類營業天數 ÷ 5。新制正職 FTE＝當日正職班出勤人數 × 該類營業天數 ÷ 5。	Calculate separately by day type and team. Baseline FTE = daily peak staffing × corresponding operating days ÷ 5. New FTE = staff assigned to full-time shifts per day × corresponding operating days ÷ 5.	日区分・部門別に算出します。現行FTE＝ピーク時の必要人数×該当営業日数÷5。新FTE＝正社員の1日勤務人数×該当営業日数÷5。
+正職月成本＝FTE × 月薪 ×（1＋正職附加成本率）。計時月成本＝每週計時人時 × 52 ÷ 12 × 時薪 ×（1＋計時附加成本率）。	Full-time monthly cost = FTE × salary × (1 + employer burden rate). Part-time monthly cost = weekly hours × 52 ÷ 12 × hourly pay × (1 + part-time employer burden rate).	正社員月額＝FTE×月給×（1＋付帯費率）。パート月額＝週人時×52÷12×時給×（1＋パート付帯費率）。
+新制月成本＝正職月成本＋計時月成本。月增減＝新制月成本－現況月成本。年度增減＝月增減 × 12。	New monthly cost = full-time cost + part-time cost. Monthly change = new cost − current cost. Annual change = monthly change × 12.	新月額＝正社員月額＋パート月額。月間増減額＝新月額－現行月額。年間増減額＝月間増減額×12。
+每週人力缺口＝各半小時未覆蓋人數 × 0.5 小時 × 該類每週營業天數，再加總外場與內場。	Weekly staffing shortfall = sum of uncovered staff per 30-minute slot × 0.5 hours × operating days, added across teams.	週不足人時＝各30分枠の不足人数×0.5時間×該当週営業日数を全枠・全部門で合計。
+分時段試算設定	Detailed scheduling settings	時間帯別試算の設定
+逐半小時需求與班次	Demand and shifts by 30-minute slot	30分単位の需要・勤務シフト
+每間餐廳分別設定外場、內場。以每日09:00–23:00、每30分鐘為單位輸入「當下必須在場的人數」，再設定早班、晚班、計時班及休息時段。每日需求預設為每個營業日相同，其他差異可建立另一個餐廳情境比較。	Set required headcount every 30 minutes from 09:00 to 23:00 for front of house and kitchen. Then set early, late and part-time shifts and breaks. Every operating day uses the same demand profile. Model different days in separate outlets.	各店舗のホールと厨房で、09:00〜23:00の30分ごとの必要人数を入力し、早番・遅番・パート勤務と休憩を設定します。日によって需要が異なる場合は別の店舗シナリオで比較できます。
+計算邏輯：	Calculation method	算出方法
+詳細版將「現況編制FTE」與「新排班需求FTE」分開比較，允許得出負增額；班表不滿足需求時會標示缺口，	Compare current FTE with the new schedule. A lower cost is possible. For a workable schedule,	現行FTEと新シフトの必要FTEを比較します。減額の場合もあり、不足がある場合は表示します。
+不能將未覆蓋的低成本方案視為可行方案	cover all required staffing slots	配置不足がある低コスト案は再検討してください
+。自動建議是固定三種班型下的成本最小整數組合，並非全飯店跨部門最佳化。	. The recommendation minimizes cost across three fixed shift templates within each team.	。自動提案は各部門の固定3シフト内で費用を最小化します。
+全館與餐廳別成本比較	Hotel-wide and outlet cost comparison	全館・店舗別コスト比較
+每個部門現況FTE獨立輸入；新制正職FTE按每日班次人數 × 每週營業天數 ÷ 5 計算，計時成本按實際排班小時計算。	Enter current FTE for each team. New full-time FTE is based on scheduled working hours, and part-time cost uses scheduled part-time hours.	現行FTEは部門別に入力します。新シフトの正社員FTEとパート費用は、それぞれの勤務時間を基に算出します。
+餐廳	Restaurant	店舗
+覆蓋	Coverage	充足状況
+新制FTE	New FTE	新FTE
+計時人時/月	Part-time hours / month	パート人時／月
+每月增減	Monthly change	月間増減額
+每年增減	Annual change	年間増減額
+班次覆蓋檢核	Shift coverage check	シフト充足チェック
+圖中「需求」為輸入的最低在場人數，「覆蓋」為班次扣除休息後的實際在場人數；紅色代表缺人。0需求時段不必排班。	Demand is the minimum required headcount. Coverage excludes scheduled breaks. Red indicates a staffing shortfall.	「需要」は最低必要人数、「配置」は休憩を差し引いた勤務人数です。赤は人員不足です。
+成本與覆蓋判讀	Cost and coverage assessment	コストと人員充足の確認
+財務公式與覆蓋口徑	Cost and coverage formulas	人件費と人員充足の算式
+現況月成本＝現況正職 FTE × 正職月薪 ×（1＋正職附加成本率）。	Current monthly cost = current full-time FTE × salary × (1 + full-time employer burden rate).	現行月額＝現行の正社員FTE×月給×（1＋正社員付帯費率）。
+新制正職 FTE＝正職班每日出勤人數合計 × 每週營業天數 ÷ 5。假設每班有薪 8 小時。	New full-time FTE = daily full-time headcount × operating days per week ÷ 5. Assumes eight paid hours per shift.	新シフトの正社員FTE＝1日の正社員勤務人数×週営業日数÷5。1シフトの有給勤務は8時間と仮定します。
+新制月成本＝新制正職 FTE × 正職月薪 ×（1＋正職附加成本率）＋每月計時人時 × 計時時薪 ×（1＋計時附加成本率）。	New monthly cost = new full-time FTE × salary × (1 + full-time employer burden rate) + monthly part-time hours × hourly wage × (1 + part-time employer burden rate).	新月額＝正社員FTE×月給×（1＋正社員付帯費率）＋パート月間人時×時給×（1＋パート付帯費率）。
+每月計時人時＝每日計時人時 × 每週營業天數 × 年換算週數 ÷ 12。年度增減＝（新制月成本－現況月成本）× 12。	Monthly part-time hours = daily part-time hours × operating days per week × weeks per year ÷ 12. Annual change = (new monthly cost − current monthly cost) × 12.	月間パート人時＝1日のパート人時×週営業日数×年換算週数÷12。年間増減額＝（新月額－現行月額）×12。
+每半小時缺口＝需求人數－扣除休息後實際在場人數，最低為零。每日缺口人時＝各時段缺口人數加總 × 0.5。	Shortfall per 30-minute slot = required staff − staff present after breaks, with a floor of zero. Daily uncovered hours = sum of shortfalls × 0.5.	30分枠の不足人数＝必要人数－休憩を除く勤務人数（最低0）。1日の不足人時＝各枠の不足人数の合計×0.5。
+成本模型 v1.3｜設定儲存在目前瀏覽器，可用 JSON 備份與移轉。	Cost model v1.3 · Browser-local settings with JSON backup and import.	コストモデル v1.3｜設定はブラウザー内に保存。JSONでのバックアップ・移行に対応。
+成本模擬	Cost simulator	コスト試算
+法規與排班檢核	Labor rules & roster check	労働法令・シフト確認
+語言	Language	言語
+中餐廳（示範）	Chinese restaurant (sample)	中国料理店（サンプル）
+未命名餐廳	Untitled restaurant	名称未設定の店舗
+外場	Front of house	ホール
+內場	Kitchen	厨房
+每餐期需求（人）	Required staff per service	食事時間帯の必要人数
+午晚餐各自需要的現場人力	Staff needed at each lunch or dinner service.	ランチとディナーそれぞれの必要人数。
+僅套用這間餐廳的{0}	Applies to this outlet only ({0}).	この店舗の{0}にのみ適用します。
+每日計時補班（小時）	Daily part-time support (hours)	1日のパート応援時間
+該部門每名計時人員支援時數	Hours per part-time worker in this team.	この部門のパート1人当たりの勤務時間。
+餐廳名稱	Restaurant name	店舗名
+刪除餐廳	Delete outlet	店舗を削除
+外場與內場共用營業天數	Shared by front of house and kitchen.	ホールと厨房で共通です。
+外場｜服務人員	Front of house · service team	ホール｜接客スタッフ
+內場｜廚房人員	Back of house · kitchen team	厨房｜調理スタッフ
+約 {0} 名全職當量（FTE）	About {0} full-time equivalents	約{0}人相当（FTE）
+原成本增加 {0}	Increase over baseline: {0}	現行比の増加率：{0}
+比全正職方案每年少 {0}	{0} less per year than full-time only	正社員案より年間{0}削減
+現況FTE：{0}	Current FTE: {0}	現行FTE：{0}
+原月成本：{0}	Current monthly cost: {0}	現行月額：{0}
+混合制每月新增：{0}	Mixed staffing monthly increase: {0}	併用案の月間増加額：{0}
+增幅：{0}	Increase: {0}	増加率：{0}
+外場合計	Front-of-house subtotal	ホール小計
+內場合計	Kitchen subtotal	厨房小計
+全館合計	Hotel total	全館合計
+現行兩頭班	Current split shifts	現行の中抜け勤務
+混合一頭班	Mixed continuous shifts	通し勤務・併用
+全正職一頭班	Full-time continuous shifts	通し勤務・正社員のみ
+依目前設定，混合一頭班每年新增 {0}，其中外場 {1}、內場 {2}；全正職一頭班每年新增 {3}。	Annual increase: {0} for mixed staffing, including {1} in front of house and {2} in the kitchen. The full-time option adds {3}.	年間増加額は併用案で{0}（ホール{1}、厨房{2}）、正社員案で{3}です。
+此處將內外場的人數、薪資與計時工時分別估算，但仍使用同一個簡化的雙餐期模型。廚房備料與收尾、外場開餐前後工作、休息與交疊時段，應進一步以30分鐘實際需求表校驗，才能作為正式編制預算。	The quick estimate uses the same two-service model for both teams. Verify prep, closing, breaks and overlaps against actual 30-minute demand before setting a staffing budget.	簡易試算は両部門とも昼・夜の2食事帯を前提とします。配置予算の策定前に、仕込み・締め作業・休憩・シフトの重なりを実際の30分単位需要で確認してください。
+每餐期人數	Staff per service	食事時間帯の人数
+正職月薪	Full-time monthly pay	正社員月給
+計時時薪	Part-time hourly pay	パート時給
+計時補班小時	Part-time support hours	パート応援時間
+原FTE	Baseline FTE	現行FTE
+混合制總成本/月	Mixed total / month	併用・月額合計
+全正職總成本/月	Full-time total / month	正社員・月額合計
+全館假設	Hotel-wide assumptions	全館共通の前提
+正職附加成本%	Full-time employer burden %	正社員付帯費率％
+計時附加成本%	Part-time employer burden %	パート付帯費率％
+年週數	Weeks per year	年間週数
+餐飲班制成本試算_內外場.csv	F&B-shift-cost.csv	料飲部門_シフト人件費.csv
+餐飲班制模擬設定_內外場.json	F&B-shift-settings.json	料飲部門_シフト設定.json
+沒有餐廳資料	No restaurant data in the file.	ファイルに店舗データがありません。
+已匯入設定（舊版資料的原編制視為外場，內場預設0人，請補填）	Settings imported. For older files, existing staffing is treated as front of house. Enter kitchen staffing separately.	設定を取り込みました。旧版ファイルの既存人数はホールに適用されます。厨房の人数は別途入力してください。
+匯入失敗：{0}	Import failed: {0}	取込に失敗しました：{0}
+新增餐廳 {0}	New outlet {0}	新規店舗 {0}
+確定恢復示範資料？目前設定將被取代。	Restore sample data and replace current settings?	現在の設定をサンプルデータで置き換えますか？
+早班	Early shift	早番
+晚班	Late shift	遅番
+尖峰計時	Peak part-time shift	ピーク時パート
+時間	Time	時刻
+不休息	No break	休憩なし
+每週營業 {0} 天 · 與簡易版共用餐廳名稱、薪資及營業天數	Open {0} days per week. Outlet name, pay and operating days are shared with the quick estimate.	週{0}日営業。店舗名・給与・営業日数は簡易試算と共通です。
+{0}｜逐時段人力	{0} · staffing by time slot	{0}｜時間帯別の配置
+班次設定異常	Invalid shift settings	シフト設定エラー
+尚有 {0} 個缺人時段	{0} slots understaffed	{0}枠で人員不足
+全部時段已覆蓋	All slots covered	全時間帯を充足
+現況正職FTE（比較基準）	Current full-time FTE (baseline)	現行の正社員FTE（比較基準）
+正職月薪：{0}	Full-time monthly pay: {0}	正社員月給：{0}
+計時時薪：{0}	Part-time hourly pay: {0}	パート時給：{0}
+班次設定：正職班必須連續跨9小時，內含1小時無薪休息，實際有薪8小時；計時班最多8小時（無休息設定）。數量是「每天實際出勤的人數」，不是總編制。	Full-time shifts span nine hours, including one unpaid hour. Part-time shifts may be up to eight hours in this model. Enter the headcount actually scheduled each day.	正社員の拘束時間は9時間、うち無給休憩1時間です。本モデルのパート勤務は最長8時間です。1日の実勤務人数を入力してください。
+班型	Shift template	シフト区分
+開始	Start	開始
+結束	End	終了
+休息開始（1小時）	Break start (one hour)	休憩開始（1時間）
+每日人數	Daily headcount	1日の勤務人数
+{0}每日人數	{0} daily headcount	{0}の1日勤務人数
+有效工作時數	Paid shift hours	有給勤務時間
+設定異常	Invalid settings	設定エラー
+自動建議最低成本人數	Suggest lowest-cost headcount	最小コストの人数を提案
+在目前的早班／晚班／計時班時段下，無法完整覆蓋需求。請先調整班次時間或休息時段。	The recommendation cannot cover current demand within these shift templates. Check shift and break times.	現在のシフトではすべての需要を充足できません。勤務・休憩時刻を見直してください。
+恢復此部門示範需求	Restore sample demand for this team	この部門のサンプル需要に戻す
+逐半小時輸入「至少需要幾人同時在場」（例如午餐12:00需要12人，就填12）。調整後立即更新缺口及成本。	Enter the minimum staff required for each 30-minute slot. Costs and shortfalls update after editing.	30分枠ごとの最低必要人数を入力すると、費用と不足が更新されます。
+{0} {1}人力需求	{0} staffing demand at {1}	{0}の{1}必要人数
+每日需求 {0} 人時	Daily demand: {0} staff-hours	1日の需要：{0}人時
+缺口 {0} 人時／日	Shortfall: {0} staff-hours/day	不足：{0}人時／日
+超額 {0} 人時／日	Surplus: {0} staff-hours/day	余剰：{0}人時／日
+現況 {0} FTE	Current: {0} FTE	現行：{0} FTE
+詳細版新制增減 {0}	Change vs. current: {0}	現行比の増減率：{0}
+新制每月總成本	New monthly total	新シフトの月間合計
+警示：班次設定異常	Warning: invalid shift settings	警告：シフト設定エラー
+警示：{0} 個半小時缺人時段	Warning: {0} understaffed 30-minute slots	警告：30分枠{0}件で不足
+全部人力需求已覆蓋	All staffing demand covered	必要人数をすべて充足
+班次錯誤	Invalid shift	シフトエラー
+缺口 {0}人時/日	Shortfall: {0} staff-hours/day	不足：{0}人時／日
+符合	Covered	充足
+時段	Time slot	時間枠
+需求	Demand	需要
+在場人數	Staff present	配置人数
+差額	Difference	差
+依目前各餐廳內外場設定，現況月成本 {0}，新制月成本 {1}，年度增減 {2}。	Current monthly cost is {0}. The new monthly cost is {1}, an annual change of {2}.	現行月額は{0}、新シフト月額は{1}、年間増減額は{2}です。
+部分正職班非9小時（含1小時休息），或計時班設定錯誤，需修正才可採用此成本。	Some shifts have invalid durations or breaks. Correct these before relying on the cost.	勤務時間または休憩の設定に誤りがあります。費用を採用する前に修正してください。
+目前仍有 {0} 個部門×半小時缺人時段，每天合計缺 {1} 人時。請補足班次再評估成本。	There are {0} understaffed team/slot combinations, totaling {1} missing staff-hours per day. Resolve the gaps before using the cost.	部門別で{0}枠の不足があり、合計{1}人時／日です。人員を補ってから費用を評価してください。
+所有輸入的半小時在場需求皆已覆蓋；請再驗證開收餐、職能別、休假及法定要求。	All entered staffing demand is covered. Check prep and closing, skills, time off and statutory requirements separately.	入力した配置需要はすべて充足しています。開店・閉店業務、技能、休日、法令上の要件は別途確認してください。
+成本增減不含未輸入的獎金、特休與國定假日替補、跨部門支援、訓練及營運流程改變。自動建議只針對每部門設定的三個固定班型計算整數人數最低成本，沒有搜尋其他起迄時間，也不能替代法遵及實際逐人排班。	Costs exclude bonuses, leave and holiday cover, shared staffing, training and operational changes unless entered. The recommendation minimizes integer headcount cost across the three templates. Review individual rosters for legal checks.	未入力の賞与、休暇代替、部門間応援、研修、業務変更は費用に含みません。自動提案は固定3シフトで整数人数の費用を最小化します。法令上の確認は従業員別の勤務表で行います。
+現況正職FTE	Current full-time FTE	現行の正社員FTE
+計時月人時	Monthly part-time hours	月間パート人時
+原成本/月	Current cost / month	現行月額
+新成本/月	New cost / month	新月額
+增減/月	Change / month	月間増減額
+增減/年	Change / year	年間増減額
+缺口人時/日	Uncovered hours / day	不足人時／日
+班次設定錯誤	Invalid shift settings	シフト設定エラー
+需求人數	Required headcount	必要人数
+是	Yes	はい
+否	No	いいえ
+餐飲班制_詳細試算與時段覆蓋.csv	F&B-detailed-coverage.csv	料飲部門_詳細試算と配置.csv
+餐飲班制_簡易詳細完整備份.json	F&B-simulation-backup.json	料飲部門_試算バックアップ.json
+正職	Full-time	正社員
+計時	Part-time	パート
+平日	Weekday	平日
+假日	Weekend	週末
+{0}｜{1}	{0} · {1}	{0}｜{1}
+需求與排班覆蓋曲線	Staffing demand and coverage chart	必要人数と配置の推移
+橘：需求　藍綠：排班覆蓋｜需求 {0} 人時／日｜缺口 {1} 人時／日	Orange: demand. Teal: coverage. Daily demand {0} staff-hours, shortfall {1}.	橙：需要。青緑：配置。1日の需要{0}人時、不足{1}人時。
+原兩頭班成本／月	Current split-shift cost / month	現行の中抜け勤務・月額
+示範基準，非實際薪資表	Estimated baseline	試算用の基準額
+新一頭班成本／月	New continuous-shift cost / month	新しい通し勤務・月額
+含正職與計時	Full-time and part-time	正社員とパートを含む
+每月成本增減	Monthly cost change	月間コスト増減額
+年度成本增減	Annual cost change	年間コスト増減額
+按12個月換算	Based on 12 months	12か月換算
+仍有每週 {0} 人時未覆蓋；這不是可直接實施的排班。	{0} staff-hours per week remain uncovered.	週{0}人時の不足が残っています。
+模型逐30分鐘檢查：所有已設定時段的人力需求均被覆蓋。	All 30-minute slots with staffing demand are covered.	30分単位の必要人数を全時間帯で充足しています。
+商場	Mall	商業施設
+飯店	Hotel	ホテル
+{0}｜{1}｜{2}席。平日{3}天／假日{4}天；需求與成本依天數加權。{5} 正職最低工時比目標為{6}%，實際達成比例請看班次明細。	{0} · {1} · {2} seats. Weighted by {3} weekdays and {4} weekend days. {5} The full-time hours target is {6}%. See shift details for actual shares.	{0}｜{1}｜{2}席。平日{3}日、週末{4}日で加重。{5} 正社員勤務時間の目標比率は{6}％です。実績はシフト明細を参照してください。
+{0}／{1}（{2}天）	{0} / {1} ({2} days)	{0}／{1}（{2}日）
+{0}／{1}	{0} / {1}	{0}／{1}
+缺 {0} 人時／日	Short {0} staff-hours/day	{0}人時／日の不足
+完整	Covered	充足
+班別	Shift type	勤務区分
+工作起迄	Working hours	勤務開始・終了
+休息時間	Break time	休憩時間
+每日有效人時	Paid staff-hours/day	有給人時／日
+本情境依餐種設定營業時段、尖峰係數、每位服務人員／廚師承擔的參考客流，並依座位數、平假日、營業量、服務與料理複雜度產生需求。正職最低工時比例實際達成：{0}。現況兩頭班成本以單日需求最大在場人數反推，未反映真實員工數；結果不含年終、假勤替補、員工餐、休假、加班、旺淡季、宴會實際場次、開店與收店要求以外的行政工作。建議以實際30分鐘來客、工時與員工名冊覆核。排班是貪婪式啟發法，不保證最低成本，亦未做個人層級勞基法排班查核。	Demand combines format-specific hours and peak loads with seats, day type, volume and service or kitchen weights. Actual full-time hour shares: {0}. The split-shift baseline uses daily peak demand. Bonuses, relief cover, meals, overtime, seasonality, event frequency and administrative work are excluded. Review against actual traffic and individual rosters. Suggested shifts come from a staffing heuristic.	業態別の営業時間・ピーク負荷に、席数、日区分、営業量、サービス・調理の係数を組み合わせて需要を算出します。正社員勤務時間の達成比率：{0}。中抜け勤務の基準は日中のピーク需要から推計します。賞与、代替要員、食事、残業、季節変動、宴会件数、管理業務は対象外です。実績と従業員別勤務表で確認してください。推奨シフトはヒューリスティックによる提案です。
+使用正職附加成本 {0}%、計時附加成本 {1}%，計時成本每年以 52 週換算。附加成本可於簡易版或詳細版的共通成本假設調整。	Employer burden: {0}% for full-time employees and {1}% for part-time employees. Part-time cost assumes 52 weeks. Set burden rates in the shared assumptions.	付帯費率は正社員{0}％、パート{1}％。パート費用は年52週換算です。付帯費率は共通コスト前提で変更できます。
+餐種	Restaurant format	業態
+場域	Venue	営業場所
+座位	Seats	席数
+服務係數	Service multiplier	サービス係数
+內場係數	Kitchen multiplier	厨房係数
+平／假日	Day type	日区分
+缺口	Shortfall	不足
+原成本月	Current monthly cost	現行月額
+新成本月	New monthly cost	新月額
+每日正職數	Daily full-time headcount	1日の正社員人数
+每日計時時數	Daily part-time staff-hours	1日のパート人時
+餐種場域_人力成本情境分析.csv	restaurant-staffing-scenario.csv	業態別人員配置シナリオ.csv
+已新增餐廳並套用「平日 09:00–23:00」內外場需求。詳細版班次人數預設為0，請設定／執行最佳化；早餐06:00–09:00及23:00後需求不會轉入詳細版。	A new outlet now uses weekday staffing demand from 09:00 to 23:00. Configure or optimize its shifts. Demand before 09:00 and after 23:00 is outside the detailed schedule.	新規店舗に平日09:00〜23:00の需要を適用しました。シフトを設定するか自動提案を実行してください。09:00より前と23:00以降の需要は詳細試算の対象外です。
+成本模型來源	Model source	試算モデルの出典
+使用者提供的餐飲班制模擬平台 v1.3	User-provided F&B Shift Simulator v1.3	提供された料飲部門シフト試算 v1.3

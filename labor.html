@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>法規與排班檢核</title>
+<link rel="stylesheet" href="site-nav.css">
+<link rel="stylesheet" href="labor.css">
+</head>
+<body data-page="labor">
+<header>
+  <div><small>飯店餐飲營運管理</small><h1>台灣勞動法規與排班檢核</h1><p>飯店與餐飲業的四週變形工時</p></div>
+  <div class="site-actions">
+    <nav class="site-links"><a href="./" data-site-page>成本模擬</a><a href="labor.html" data-site-page aria-current="page">法規與排班檢核</a></nav>
+    <div class="locale-picker" role="group" aria-label="語言"><button type="button" data-language="zh-Hant" lang="zh-Hant" aria-pressed="true" disabled>繁中</button><button type="button" data-language="en" lang="en" aria-pressed="false" disabled>English</button><button type="button" data-language="ja" lang="ja" aria-pressed="false" disabled>日本語</button></div>
+    <span id="languageError" hidden>語言載入失敗，請重新整理。 / Reload to try languages again.</span>
+  </div>
+</header>
+<main>
+  <nav class="jump-links"><a href="#eligibility">適用條件</a><a href="#roster">28 日班表</a><a href="#references">條文與來源</a></nav>
+  <section class="panel" id="eligibility">
+    <h2>確認適用條件</h2>
+    <p>依實際聘僱員工的事業單位確認行業別。飯店餐廳與商場餐廳是成本情境，行業別仍由實際雇主決定。</p>
+    <div class="eligibility-fields">
+      <label>雇主行業別
+        <select id="industry">
+          <option value="">請選擇</option>
+          <option value="tourist">觀光旅館業</option>
+          <option value="hotel">一般旅館業</option>
+          <option value="food">餐飲業</option>
+          <option value="other">其他或尚未確認</option>
+        </select>
+      </label>
+      <label>事業單位有工會
+        <select id="union"><option value="">請選擇</option><option value="yes">是</option><option value="no">否</option></select>
+      </label>
+      <label>四週工時制度的同意紀錄
+        <select id="consent">
+          <option value="">尚未確認</option>
+          <option value="union">已取得工會同意</option>
+          <option value="meeting">已取得勞資會議同意</option>
+        </select>
+      </label>
+      <label>正常工時週期起日
+        <input id="startDate" type="date" min="2000-01-01" max="2099-12-31">
+      </label>
+    </div>
+    <p class="status" id="eligibilityStatus" role="status"></p>
+    <p class="note">第 30 條之 1 的同意程序依有無工會判定。雙方議定週期起迄，按曆日連續計算，跨月時延續同一週期。</p>
+    <p class="source"><a href="#sources-designation">指定行業與同意程序來源</a></p>
+  </section>
+
+  <section class="panel" id="roster">
+    <h2>逐人班表檢核</h2>
+    <p>每次檢查一位員工的 28 日班表。選擇每日類型，輸入實際工作區間（排除休息），並填入其中的正常工時。加班時數由工作區間與正常工時的差額推算。</p>
+    <p class="note"><span>區間範例</span> <code>09:00-13:00, 14:00-18:00</code><br><span>以逗號分隔各工作區間。夜班請以起班日輸入，例如 22:00-02:00。只允許跨入下一日一次。日期請依正式工時週期填寫。</span></p>
+    <div class="action-row">
+      <button type="button" id="sample8">載入 8 小時範例</button>
+      <button type="button" id="sample10">載入 10 小時範例</button>
+      <button type="button" id="clearRoster">清空班表</button>
+    </div>
+    <div class="tablewrap" tabindex="0" role="region" aria-label="28 日班表">
+      <table>
+        <thead><tr><th>日次</th><th>日期</th><th>日別</th><th>工作區間（24 小時制）</th><th>正常工時</th><th>實際工時</th><th>延長工時</th></tr></thead>
+        <tbody id="rosterRows"></tbody>
+      </table>
+    </div>
+    <div class="action-row">
+      <button type="button" class="primary" id="checkRoster">檢查班表</button>
+      <button type="button" id="exportRoster" disabled>匯出檢核 CSV</button>
+      <button type="button" id="printRoster">列印報告</button>
+    </div>
+    <section id="review" aria-live="polite" hidden>
+      <h3>檢核結果</h3>
+      <div id="totals" class="totals"></div>
+      <p id="summaryStatus" class="status"></p>
+      <ul id="issues"></ul>
+    </section>
+    <p class="note">檢核採一般規則。換班間隔以相鄰班次間至少 11 小時初篩。跨週期班次、整月與三個月加班合計、特殊例外、國定假日出勤及工資需依完整紀錄覆核。當 28 日範圍內已超過某月 46 小時，系統會提醒查核額外同意及上限。班表只儲存在目前瀏覽器，請以員工代碼管理，不必填姓名。</p>
+  </section>
+
+  <section class="panel" id="references">
+    <h2>條文與來源</h2>
+    <p>以下為條文摘要。切換語言時，摘要、檢核欄位和參考來源說明同步更新。法規適用以官方中文原文為準。</p>
+    <div class="tablewrap" tabindex="0" role="region" aria-label="條文與來源">
+      <table class="references">
+        <thead><tr><th>條文</th><th>工時與排班規則</th><th>官方來源</th></tr></thead>
+        <tbody>
+          <tr><td>第 30 條及第 30 條之 1</td><td>一般正常工時每日 8 小時、每週 40 小時。指定行業經法定程序同意後，得在四週內重分配正常工時，每日最多增加 2 小時，四週正常工時最多 160 小時。每日正常工時達 10 小時時，當日加班不超過 2 小時。</td><td><a href="https://laws.mol.gov.tw/FLAW/FLAWDOC01.aspx?flno=30-1&amp;id=FL014930">勞基法第 30 條之 1</a> · <a href="#sources-handbook">手冊</a></td></tr>
+          <tr><td>第 36 條第 2 項第 3 款</td><td>四週週期的每個兩週區段至少 2 日例假，四週內例假加休息日至少 8 日。空班日另列。</td><td><a href="https://laws.mol.gov.tw/FLAW/FLAWDOC01.aspx?flno=36&amp;id=FL014930">勞基法第 36 條</a></td></tr>
+          <tr><td>第 34 條</td><td>輪班勞工更換班次時，原則上至少有連續 11 小時休息。公告例外有適用範圍與程序。</td><td><a href="https://laws.mol.gov.tw/FLAW/FLAWDOC01.aspx?flno=34&amp;id=FL014930">勞基法第 34 條</a></td></tr>
+          <tr><td>第 35 條</td><td>連續工作每 4 小時原則上至少休息 30 分鐘。輪班、連續性或緊急性工作可依條件另行調配休息。</td><td><a href="https://laws.mol.gov.tw/FLAW/FLAWDOC01.aspx?flno=35&amp;id=FL014930">勞基法第 35 條</a></td></tr>
+          <tr><td>第 24、32、36、39 條</td><td>一般日正常工時與加班合計上限 12 小時，原則上每月加班不超過 46 小時。符合法定程序的例外上限為每月 54 小時且每三個月 138 小時，僱用 30 人以上者須備查。休息日出勤計入法定延長工時，並應依日別核對加給及補休。</td><td><a href="https://laws.mol.gov.tw/FLAW/FLAWDOC01.aspx?flno=32&amp;id=FL014930">勞基法第 32 條</a> · <a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=N0030001">完整條文</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul class="source-list">
+      <li id="sources-designation"><a href="https://www.mol.gov.tw/1607/28162/28166/28218/28220/32907/">勞動部｜工時制度及工作彈性化措施介紹</a> · <a href="https://www.mol.gov.tw/media/4m4bkp4a/指定適用勞動基準法彈性工時之行業.pdf?mediaDL=true">指定行業清單（PDF）</a><p>觀光旅館業（87.02.05 勞動2字第003088號函）、餐飲業（88.01.29 勞動2字第001359號函）、一般旅館業（88.05.19 勞動2字第022656號函）。</p></li>
+      <li id="sources-handbook"><a href="https://www.mol.gov.tw/media/dhrbetlk/114年工時制度及彈性措施手冊-2025.pdf?mediaDL=true">勞動部｜工時制度及彈性措施手冊（2025）</a><p>第 7–8 頁有四週工時的排班範例，附錄一列出指定行業和函號。</p></li>
+      <li><a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=N0030001">全國法規資料庫｜勞動基準法中文全文</a> · <a href="https://law.moj.gov.tw/ENG/LawClass/LawAll.aspx?pcode=N0030001">勞動基準法官方英文版</a></li>
+    </ul>
+    <p class="note">資料查核日 2026-11-16。此頁採四週工時的一般規則。成本模擬的標準班型仍以原模型換算，新班表有加班或休息日出勤時，請另將加給納入預算。</p>
+  </section>
+</main>
+<script src="language.js"></script>
+<script type="module" src="labor.js"></script>
+</body>
+</html>

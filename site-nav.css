@@ -1,0 +1,11 @@
+.site-actions{display:grid;gap:12px;justify-items:end}
+.site-links,.locale-picker{display:flex;align-items:center;flex-wrap:wrap;gap:5px}
+.site-links a,.locale-picker button{padding:7px 9px;text-decoration:none;color:#292725;font:600 12px/1.25 system-ui,sans-serif}
+.site-links a[aria-current=page]{color:#b62025;border-bottom:2px solid #b62025}
+.locale-picker button{background:#fffdf8;border:1px solid #c9c5be;cursor:pointer}
+.locale-picker button[aria-pressed=true]{background:#262421;border-color:#262421;color:white}
+.locale-picker button:disabled{opacity:.6}
+[data-site-page]:focus-visible,.locale-picker button:focus-visible{outline:2px solid #17695f;outline-offset:2px}
+#languageError{font-size:12px;color:#9a291d}
+@media(max-width:650px){.site-actions{justify-items:start}}
+@media print{.site-actions{display:none!important}details.print-terms:not([open])>ul{display:block}}
