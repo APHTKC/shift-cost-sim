@@ -29,6 +29,22 @@
 .currency-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .currency-tools select { padding: 6px; border: 1px solid var(--line); border-radius: 8px; font: inherit; }
 .currency-note { color: var(--muted); font-size: 12px; }
+.site-preferences {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+}
+.site-preferences .currency-tools { font-size: 12px; font-weight: 600; }
+.currency-note:has(#exchangeRateStatus:empty):has(#exchangeQuote[hidden]) { display: none; }
+.site-footer { padding: 0 18px 24px; }
+.site-footer p { margin: 0 0 8px; }
+.visit-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--blue);
+}
 .print-only { display: none; }
 @media (max-width: 540px) {
   .insight-card { padding: 12px 14px; }

@@ -51,12 +51,16 @@ tbody tr:hover{background:#faf7ef}
 <body>
 <header><div><small>飯店餐飲營運管理</small><h1>一頭班人力成本模擬</h1><p>比較兩頭班、全正職一頭班與正職＋計時混合制</p></div><div class="site-actions">
   <nav class="site-links"><a href="./" data-site-page aria-current="page">成本模擬</a><a href="labor.html" data-site-page>法規與排班檢核</a></nav>
+  <div class="site-preferences">
   <div class="locale-picker" role="group" aria-label="語言"><button type="button" data-language="zh-Hant" lang="zh-Hant" aria-pressed="true" disabled>繁中</button><button type="button" data-language="en" lang="en" aria-pressed="false" disabled>English</button><button type="button" data-language="ja" lang="ja" aria-pressed="false" disabled>日本語</button></div>
+  <label class="currency-tools">顯示幣別 <select id="displayCurrency"><option value="TWD">TWD｜新台幣</option><option value="JPY">JPY｜日圓</option><option value="USD">USD｜美元</option></select></label>
+  </div>
+  <div class="currency-tools currency-note"><span id="exchangeRateStatus" role="status"></span><a id="exchangeQuote" href="https://www.google.com/finance/" target="_blank" rel="noopener" hidden>查看 Google Finance 報價</a></div>
   <span id="languageError" hidden>語言載入失敗，請重新整理。 / Reload to try languages again.</span>
 </div></header>
 <main class="wrap">
 <div class="print-only print-context"><p id="reportMode"></p><p id="reportCurrency">金額以新台幣計</p></div>
-<div class="topbar"><div><b>模擬情境</b><div class="note">設定與試算資料儲存在目前瀏覽器。 <span>輸入與資料匯出以新台幣計。</span></div></div><div class="button-group"><button type="button" class="btn primary" id="addUnit">＋新增餐廳／單位</button><button class="btn" id="downloadCSV">匯出 CSV</button><button class="btn" id="exportJSON">備份 JSON</button><button class="btn" id="importJSON">匯入 JSON</button><label class="currency-tools">顯示幣別 <select id="displayCurrency"><option value="TWD">TWD｜新台幣</option><option value="JPY">JPY｜日圓</option><option value="USD">USD｜美元</option></select></label><button class="btn" id="printBtn">列印 / 存為 PDF 報告</button><input type="file" id="fileInput" accept=".json,application/json" class="hidden"/></div><div class="currency-tools currency-note"><span id="exchangeRateStatus" role="status"></span><a id="exchangeQuote" href="https://www.google.com/finance/" target="_blank" rel="noopener" hidden>查看 Google Finance 報價</a></div></div>
+<div class="topbar"><div><b>模擬情境</b><div class="note">設定與試算資料儲存在目前瀏覽器。 <span>輸入與資料匯出以新台幣計。</span></div></div><div class="button-group"><button type="button" class="btn primary" id="addUnit">＋新增餐廳／單位</button><button class="btn" id="downloadCSV">匯出 CSV</button><button class="btn" id="exportJSON">備份 JSON</button><button class="btn" id="importJSON">匯入 JSON</button><button class="btn" id="printBtn">列印 / 存為 PDF 報告</button><input type="file" id="fileInput" accept=".json,application/json" class="hidden"/></div></div>
 <section class="panel edit-area mode-shell" style="margin-top:0"><div class="mode-tabs" role="tablist" aria-label="試算模式"><button type="button" id="simpleTab" class="mode-tab active" role="tab" aria-selected="true">快速試算｜簡易版</button><button type="button" id="detailTab" class="mode-tab" role="tab" aria-selected="false">分時段試算｜詳細版</button><button type="button" id="scenarioTab" class="mode-tab" role="tab" aria-selected="false">餐種情境｜模擬版</button></div><p class="note" id="modeDesc">簡易版：沿用午晚餐各4小時的快速假設，適合主管初步比較。</p></section><section class="grid" id="overviewMetrics" aria-label="總覽指標"><div class="metric"><span>現況每月人事成本</span><strong id="baseMonth">—</strong><small id="baseFte">—</small></div><div class="metric teal"><span>混合班制｜每月新增</span><strong id="mixedAdd">—</strong><small id="mixedPct">—</small></div><div class="metric orange"><span>全正職制｜每月新增</span><strong id="fullAdd">—</strong><small id="fullPct">—</small></div><div class="metric"><span>混合班制｜每年新增</span><strong id="mixedYear">—</strong><small id="deltaFull">—</small></div></section>
 <aside class="insight-card"><h3>💡 經營者與高階主管洞察：這筆新增成本，買到了什麼？</h3>
 <ul>
@@ -134,8 +138,14 @@ tbody tr:hover{background:#faf7ef}
 <li>每半小時缺口＝需求人數－扣除休息後實際在場人數，最低為零。每日缺口人時＝各時段缺口人數加總 × 0.5。</li>
 </ul></details></section>
 </section>
-<div class="footer">成本模型 v1.3｜設定儲存在目前瀏覽器，可用 JSON 備份與移轉。 <span>成本模型來源</span> · <span>使用者提供的餐飲班制模擬平台 v1.3</span></div>
 </main>
+<footer class="footer site-footer">
+  <p><span>版本</span> <strong>v1.4</strong> <span aria-hidden="true">·</span> <span>最後更新</span> <time datetime="2026-11-17">2026-11-17</time></p>
+  <a class="visit-counter" href="https://librecounter.org/aphtkc.github.io/show" target="_blank" rel="noopener noreferrer">
+    <img src="https://librecounter.org/counter.svg" referrerpolicy="unsafe-url" alt="" width="20" height="20">
+    <span>瀏覽統計</span>
+  </a>
+</footer>
 <script>
 'use strict';
 const BENEFIT_DEFAULTS={splitAllowance:0,avoidedDepartures:0,turnoverCost:60000};
@@ -175,7 +185,7 @@ function investmentInsight(mixedYear, fullYear=0, mixedLabel='混合制') {
   const annual=mixedYear>0?mixedYear:fullYear;
   const label=mixedYear>0?mixedLabel:'全正職制';
   target.hidden=!(annual>0);
-  target.textContent=target.hidden?'':'📊 決策參考：以目前試算的「'+label+'」為例，每年預計多投入約 '+money(annual)+(displayCurrency==='TWD'?' 元':'')+'；若此變革能為全館每年減少 '+nt(Math.ceil(annual/90000))+' 位正職離職（以單人招募培訓與空窗隱性成本約 '+money(90000)+' 計），並避免因缺工造成的縮減餐期損失，實質營運成本將大幅低於帳面數字。';
+  target.textContent=target.hidden?'':'📊 決策參考：以目前試算的「'+label+'」為例，每年預計多投入約 '+money(annual)+'；若此變革能為全館每年減少 '+nt(Math.ceil(annual/90000))+' 位正職離職（以單人招募培訓與空窗隱性成本約 '+money(90000)+' 計），並避免因缺工造成的縮減餐期損失，實質營運成本將大幅低於帳面數字。';
 }
 function appendTurnoverEffect(target,annualDelta,label='混合制') {
   const savings=model.avoidedDepartures*model.turnoverCost;
