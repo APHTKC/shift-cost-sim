@@ -102,12 +102,13 @@ tbody tr:hover{background:#faf7ef}
 </div>
 <div class="button-group" style="margin-top:18px"><button id="runScenario" type="button" class="btn primary">執行模擬</button><button id="scApply" type="button" class="btn" disabled>套用平日需求至詳細版</button><button id="scCsv" type="button" class="btn" disabled>匯出情境明細 CSV</button></div><p class="note" style="margin-top:10px">「營業量」調整每餐出餐／服務負荷；「服務精緻度」以外場為主要影響；「內場製程複雜度」主要影響廚房；正職工時比為排班規劃約束，非法律規定。宴會廳以指定座位數視為單場宴會容量，非每天固定滿席。</p>
 </section>
+<div id="scenarioResults" class="hidden"><section class="panel"><h2>模擬結果｜成本及編制</h2><div id="scenarioHeadline" class="scenario-kpis"></div><div id="scenarioNarrative" class="warning"></div><div class="tablewrap"><table><thead><tr><th>日期／部門</th><th>原兩頭班基準FTE＊</th><th>新制正職FTE</th><th>新制計時人時／週</th><th>原月成本</th><th>新制月成本</th><th>月增減</th><th>人力覆蓋</th></tr></thead><tbody id="scenarioRows"></tbody></table></div><p class="note">＊原兩頭班基準為依需求尖峰反推的「示範編制」，不是飯店既有實際編制。正式報告必須替換成現有人事費及實際FTE。平日／假日按每週營業天數加權。正職薪資採每人每月固定成本；FTE為平均編制需求，需依排休及假勤上修。</p></section><section class="panel"><h2>人力需求曲線與班次建議</h2><div id="scenarioChart"></div><div id="scenarioShiftTable"></div>
 <aside class="insight-card"><h3>🎯 現場主管實戰指南：告別排班地獄與無限輪迴的新人培訓</h3>
 <ul>
 <li><strong>離峰產能再分配，尖峰出餐更順暢</strong>：下午離峰時段（14:00–17:00）不再是沒人用的空窗期。一頭班同仁可將原先在尖峰時段極度壓縮的「備料、盤點、環境深度清潔、叫貨」提前或延後完成，讓午晚餐期能 100% 專注於出餐與顧客服務。</li>
 <li><strong>留住熟手，降低管理耗損</strong>：排班不再需要為了補 1–2 小時的缺口而四處求人。穩定的班表能留住核心戰力，大幅減少主廚與外場經理每天花在「改班表、找代班、重複訓練新人」的心力耗損。</li>
 </ul></aside>
-<div id="scenarioResults" class="hidden"><section class="panel"><h2>模擬結果｜成本及編制</h2><div id="scenarioHeadline" class="scenario-kpis"></div><div id="scenarioNarrative" class="warning"></div><div class="tablewrap"><table><thead><tr><th>日期／部門</th><th>原兩頭班基準FTE＊</th><th>新制正職FTE</th><th>新制計時人時／週</th><th>原月成本</th><th>新制月成本</th><th>月增減</th><th>人力覆蓋</th></tr></thead><tbody id="scenarioRows"></tbody></table></div><p class="note">＊原兩頭班基準為依需求尖峰反推的「示範編制」，不是飯店既有實際編制。正式報告必須替換成現有人事費及實際FTE。平日／假日按每週營業天數加權。正職薪資採每人每月固定成本；FTE為平均編制需求，需依排休及假勤上修。</p></section><section class="panel"><h2>人力需求曲線與班次建議</h2><div id="scenarioChart"></div><div id="scenarioShiftTable"></div></section><section class="panel"><h2>重要假設及限制</h2><div id="scenarioAssumptions" class="note"></div></section><section class="panel"><h2>情境成本口徑</h2><p class="note" id="scenarioRates"></p>
+</section><section class="panel"><h2>重要假設及限制</h2><div id="scenarioAssumptions" class="note"></div></section><section class="panel"><h2>情境成本口徑</h2><p class="note" id="scenarioRates"></p>
 <details class="print-terms"><summary>財務公式與人力覆蓋</summary><ul class="formula-list">
 <li>平日、假日、外場與內場分開計算。現況 FTE＝當日最高需求人數 × 該類營業天數 ÷ 5。新制正職 FTE＝當日正職班出勤人數 × 該類營業天數 ÷ 5。</li>
 <li>現況先計入現況 FTE × 每人月津貼。正職月薪成本＝FTE × 月薪 ×（1＋正職附加成本率）。計時月成本＝每週計時人時 × 52 ÷ 12 × 時薪 ×（1＋計時附加成本率）。</li>
