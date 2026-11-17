@@ -1,0 +1,36 @@
+name: Refresh Google Finance quotes
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '7,17,27,37,47,57 * * * *'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/exchange-rates.yml'
+      - 'scripts/update-exchange-rates.mjs'
+
+permissions:
+  contents: write
+
+concurrency: exchange-rates
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch and publish quotes
+        run: |
+          node scripts/update-exchange-rates.mjs "$RUNNER_TEMP/exchange-rates.json"
+          if git ls-remote --exit-code --heads origin exchange-rates; then
+            git fetch origin exchange-rates
+            git switch -c exchange-rates FETCH_HEAD
+          else
+            git switch --orphan exchange-rates
+          fi
+          cp "$RUNNER_TEMP/exchange-rates.json" exchange-rates.json
+          git add exchange-rates.json
+          if git diff --cached --quiet; then exit 0; fi
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Refresh Google Finance quotes'
+          git push origin exchange-rates

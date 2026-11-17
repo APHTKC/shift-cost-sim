@@ -290,3 +290,20 @@ All Day Dining｜全日餐廳	All Day Dining	オールデイダイニング
 已新增餐廳並套用「平日 09:00–23:00」內外場需求。詳細版班次人數預設為0，請設定／執行最佳化；早餐06:00–09:00及23:00後需求不會轉入詳細版。	A new outlet now uses weekday staffing demand from 09:00 to 23:00. Configure or optimize its shifts. Demand before 09:00 and after 23:00 is outside the detailed schedule.	新規店舗に平日09:00〜23:00の需要を適用しました。シフトを設定するか自動提案を実行してください。09:00より前と23:00以降の需要は詳細試算の対象外です。
 成本模型來源	Model source	試算モデルの出典
 使用者提供的餐飲班制模擬平台 v1.3	User-provided F&B Shift Simulator v1.3	提供された料飲部門シフト試算 v1.3
+
+列印 / 存為 PDF 報告	Print / Save PDF report	印刷・PDF保存
+顯示幣別	Display currency	表示通貨
+TWD｜新台幣	TWD | New Taiwan dollar	TWD｜台湾ドル
+JPY｜日圓	JPY | Japanese yen	JPY｜日本円
+USD｜美元	USD | U.S. dollar	USD｜米ドル
+輸入與資料匯出以新台幣計。	Inputs and data exports use TWD.	入力とデータ出力は台湾ドル建てです。
+查看 Google Finance 報價	View Google Finance quote	Google Financeのレートを見る
+正在取得 Google Finance 匯率…	Loading the Google Finance exchange rate…	Google Financeの為替レートを取得中…
+目前無法取得匯率，金額以新台幣顯示。	The exchange rate is unavailable. Amounts are shown in TWD.	為替レートを取得できないため、台湾ドルで表示しています。
+1 TWD = {0} {1}｜Google Finance 報價時間（台灣）{2}	1 TWD = {0} {1} | Google Finance quote time (Taiwan): {2}	1 TWD = {0} {1}｜Google Finance レート時刻（台湾）{2}
+隱性效益折抵（選填）	Estimated savings (optional)	削減効果の見積もり（任意）
+現況每人每月兩頭班／交通津貼（元）	Current split-shift / transit allowance per person per month (TWD)	現行の中抜け勤務・交通手当（1人あたり月額、TWD）
+預估年減少離職人數（人）	Estimated departures avoided per year	年間の離職減少見込み（人）
+單人招募培訓隱性成本（元）	Estimated recruiting and training cost per departure (TWD)	離職1人あたりの採用・研修コスト（TWD）
+原成本增減 {0}	Change from current cost: {0}	現行比 {0}
+增幅以各部門現況月成本（含設定的津貼）為分母。年度金額採 12 個月。	Percent changes use each department’s current monthly cost, including any allowance. Annual amounts use 12 months.	増減率の分母は各部門の現行月額コスト（設定した手当を含む）です。年間金額は12か月で計算します。

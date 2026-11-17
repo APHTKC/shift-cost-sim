@@ -1,0 +1,57 @@
+.insight-card {
+  margin: 16px 0;
+  padding: 16px 20px;
+  border: 1px solid var(--line);
+  border-inline-start: 4px solid var(--aqua);
+  border-radius: 12px;
+  background: #f1f8f8;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+.panel > .insight-card:last-child { margin-bottom: 0; }
+.insight-card h3 { margin: 0 0 8px; color: var(--blue); font-size: 16px; }
+.insight-card ul { margin: 0; padding-inline-start: 1.25em; }
+.insight-card li + li { margin-top: 6px; }
+.insight-status {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #e3f0f7;
+  font-weight: 650;
+}
+.benefit-assumptions { margin-top: 16px; }
+.benefit-assumptions summary { cursor: pointer; color: var(--blue); font-weight: 700; }
+.benefit-assumptions .controls { margin-top: 10px; }
+.result-badge { display: inline-block; padding: 2px 8px; border-radius: 8px; font-weight: 700; }
+.is-warning { background: #fff0e5; color: #942e18; }
+.is-good { background: #def3e8; color: #145c3a; }
+.is-neutral { background: #eaf0f6; color: #3d5873; }
+.currency-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.currency-tools select { padding: 6px; border: 1px solid var(--line); border-radius: 8px; font: inherit; }
+.currency-note { color: var(--muted); font-size: 12px; }
+.print-only { display: none; }
+@media (max-width: 540px) {
+  .insight-card { padding: 12px 14px; }
+}
+@page { size: A4 portrait; margin: 12mm; }
+@media print {
+  body { font-size: 10pt; }
+  .print-only { display: block; }
+  .print-context { margin: 0 0 12px; }
+  .wrap { padding: 0; }
+  .panel, #detailSection .panel { break-inside: auto; padding: 10px 0; margin: 8px 0; border: 0; }
+  .panel h2 { break-after: avoid; }
+  .insight-card, .scenario-chart-block { break-inside: avoid; }
+  .insight-card { margin: 8px 0; padding: 8px 12px; }
+  .insight-card h3 { font-size: 11pt; }
+  .metric { padding: 8px; min-width: 0; }
+  .metric strong { font-size: 13pt; overflow-wrap: anywhere; }
+  .tablewrap table { width: 100%; min-width: 0; font-size: 8pt; }
+  .tablewrap th, .tablewrap td { padding: 4px; white-space: normal; overflow-wrap: anywhere; }
+  tr { break-inside: avoid; }
+  thead { display: table-header-group; }
+  .scenario-chart-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .scenario-chart-block svg { min-width: 0; height: auto; }
+  #scenarioShiftTable, .footer { display: none; }
+  * { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+}

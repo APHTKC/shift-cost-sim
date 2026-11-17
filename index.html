@@ -47,7 +47,7 @@ tbody tr:hover{background:#faf7ef}
 .tablewrap:focus-visible,.shift-grid:focus-visible,:focus-visible{outline:2px solid #17695f;outline-offset:2px}
 @media(max-width:650px){header{padding:22px 16px}.panel{padding:16px}.mode-tab{font-size:12px;padding:9px 7px}.mode-shell{padding:0}.topbar .button-group{gap:5px}}
 @media print{header{border-top:0;padding:0 0 12px}.header-tools{display:none!important}.print-terms{display:block!important}.tablewrap,.shift-grid{overflow:visible}#scenarioNarrative{display:block!important}}
-</style><link rel="stylesheet" href="site-nav.css"></head>
+</style><link rel="stylesheet" href="site-nav.css"><link rel="stylesheet" href="decision-report.css"></head>
 <body>
 <header><div><small>飯店餐飲營運管理</small><h1>一頭班人力成本模擬</h1><p>比較兩頭班、全正職一頭班與正職＋計時混合制</p></div><div class="site-actions">
   <nav class="site-links"><a href="./" data-site-page aria-current="page">成本模擬</a><a href="labor.html" data-site-page>法規與排班檢核</a></nav>
@@ -55,13 +55,30 @@ tbody tr:hover{background:#faf7ef}
   <span id="languageError" hidden>語言載入失敗，請重新整理。 / Reload to try languages again.</span>
 </div></header>
 <main class="wrap">
-<div class="topbar"><div><b>模擬情境</b><div class="note">設定與試算資料儲存在目前瀏覽器。 <span>金額以新台幣計</span></div></div><div class="button-group"><button type="button" class="btn primary" id="addUnit">＋新增餐廳／單位</button><button class="btn" id="downloadCSV">匯出 CSV</button><button class="btn" id="exportJSON">備份 JSON</button><button class="btn" id="importJSON">匯入 JSON</button><button class="btn" id="printBtn">列印報告</button><input type="file" id="fileInput" accept=".json,application/json" class="hidden"/></div></div>
+<div class="print-only print-context"><p id="reportMode"></p><p id="reportCurrency">金額以新台幣計</p></div>
+<div class="topbar"><div><b>模擬情境</b><div class="note">設定與試算資料儲存在目前瀏覽器。 <span>輸入與資料匯出以新台幣計。</span></div></div><div class="button-group"><button type="button" class="btn primary" id="addUnit">＋新增餐廳／單位</button><button class="btn" id="downloadCSV">匯出 CSV</button><button class="btn" id="exportJSON">備份 JSON</button><button class="btn" id="importJSON">匯入 JSON</button><label class="currency-tools">顯示幣別 <select id="displayCurrency"><option value="TWD">TWD｜新台幣</option><option value="JPY">JPY｜日圓</option><option value="USD">USD｜美元</option></select></label><button class="btn" id="printBtn">列印 / 存為 PDF 報告</button><input type="file" id="fileInput" accept=".json,application/json" class="hidden"/></div><div class="currency-tools currency-note"><span id="exchangeRateStatus" role="status"></span><a id="exchangeQuote" href="https://www.google.com/finance/" target="_blank" rel="noopener" hidden>查看 Google Finance 報價</a></div></div>
 <section class="panel edit-area mode-shell" style="margin-top:0"><div class="mode-tabs" role="tablist" aria-label="試算模式"><button type="button" id="simpleTab" class="mode-tab active" role="tab" aria-selected="true">快速試算｜簡易版</button><button type="button" id="detailTab" class="mode-tab" role="tab" aria-selected="false">分時段試算｜詳細版</button><button type="button" id="scenarioTab" class="mode-tab" role="tab" aria-selected="false">餐種情境｜模擬版</button></div><p class="note" id="modeDesc">簡易版：沿用午晚餐各4小時的快速假設，適合主管初步比較。</p></section><section class="grid" id="overviewMetrics" aria-label="總覽指標"><div class="metric"><span>現況每月人事成本</span><strong id="baseMonth">—</strong><small id="baseFte">—</small></div><div class="metric teal"><span>混合班制｜每月新增</span><strong id="mixedAdd">—</strong><small id="mixedPct">—</small></div><div class="metric orange"><span>全正職制｜每月新增</span><strong id="fullAdd">—</strong><small id="fullPct">—</small></div><div class="metric"><span>混合班制｜每年新增</span><strong id="mixedYear">—</strong><small id="deltaFull">—</small></div></section>
-<section class="panel edit-area"><h2>共通成本假設</h2><p class="intro">這些為新增內外場時帶入的預設值；每個餐廳的內場與外場均可各自覆寫正職月薪、計時時薪及排班需求。附加成本比例全館共用。</p><div class="controls" id="globalControls"><div class="field"><label for="salary">正職平均月薪（元）</label><input type="number" min="0" max="1000000" step="500" id="salary" data-global="salary"/><small>可用各單位平均月薪</small></div><div class="field"><label for="benefit">正職附加成本（%）</label><input type="number" min="0" max="100" step="0.5" id="benefit" data-global="benefit"/><small>雇主負擔、福利等</small></div><div class="field"><label for="ptWage">計時時薪（元）</label><input type="number" min="0" max="10000" step="5" id="ptWage" data-global="ptWage"/><small>依實際招募價格填寫</small></div><div class="field"><label for="ptBenefit">計時附加成本（%）</label><input type="number" min="0" max="100" step="0.5" id="ptBenefit" data-global="ptBenefit"/><small>保險、勞退與其他負擔</small></div><div class="field"><label for="weeks">年換算週數</label><input type="number" min="1" max="53" step="0.01" id="weeks" data-global="weeks"/><small>預設 52 週；每月除以 12</small></div></div></section>
+<aside class="insight-card"><h3>💡 經營者與高階主管洞察：這筆新增成本，買到了什麼？</h3>
+<ul>
+<li><strong>重新定錨比較基準</strong>：帳面上，轉型一頭班與混合制會帶來直接人事費用上升；但在缺工時代，真正的比較基準不是「過去的完美編制」，而是「因缺工導致的營業損失」。</li>
+<li><strong>降低隱性沉沒成本</strong>：兩頭班是餐飲業高離職率的主因。每流失一位正職，重新招募、空窗期產能低落、制服與新人培訓的隱性成本，往往高達該員工 2–3 個月的薪資。</li>
+<li><strong>保住營收天花板</strong>：透過一頭班穩定人力，能避免因「排不出班」而被迫縮減餐期、鎖位或店休所流失的潛在營收，這筆預算實為防禦型的營運投資。</li>
+</ul><p id="investmentInsight" class="insight-status" aria-live="polite" hidden></p></aside>
+<section class="panel edit-area"><h2>共通成本假設</h2><p class="intro">這些為新增內外場時帶入的預設值；每個餐廳的內場與外場均可各自覆寫正職月薪、計時時薪及排班需求。附加成本比例全館共用。</p><div class="controls" id="globalControls"><div class="field"><label for="salary">正職平均月薪（元）</label><input type="number" min="0" max="1000000" step="500" id="salary" data-global="salary"/><small>可用各單位平均月薪</small></div><div class="field"><label for="benefit">正職附加成本（%）</label><input type="number" min="0" max="100" step="0.5" id="benefit" data-global="benefit"/><small>雇主負擔、福利等</small></div><div class="field"><label for="ptWage">計時時薪（元）</label><input type="number" min="0" max="10000" step="5" id="ptWage" data-global="ptWage"/><small>依實際招募價格填寫</small></div><div class="field"><label for="ptBenefit">計時附加成本（%）</label><input type="number" min="0" max="100" step="0.5" id="ptBenefit" data-global="ptBenefit"/><small>保險、勞退與其他負擔</small></div><div class="field"><label for="weeks">年換算週數</label><input type="number" min="1" max="53" step="0.01" id="weeks" data-global="weeks"/><small>預設 52 週；每月除以 12</small></div></div>
+<details class="benefit-assumptions"><summary>隱性效益折抵（選填）</summary><div class="controls">
+<div class="field"><label for="splitAllowance">現況每人每月兩頭班／交通津貼（元）</label><input id="splitAllowance" data-global="splitAllowance" type="number" min="0" step="1"><small>僅計入現況，假設轉型後全額省下。</small></div>
+<div class="field"><label for="avoidedDepartures">預估年減少離職人數（人）</label><input id="avoidedDepartures" data-global="avoidedDepartures" type="number" min="0" step="1"><small>以全館每年預估減少的正職離職人數填寫。</small></div>
+<div class="field"><label for="turnoverCost">單人招募培訓隱性成本（元）</label><input id="turnoverCost" data-global="turnoverCost" type="number" min="0" step="1"><small>用於財務判讀的年度預估效益。</small></div>
+</div></details></section>
 <section class="panel edit-area simple-only"><div class="units-head"><div><h2>餐廳與排班設定</h2><p class="intro" style="margin-bottom:0">每個餐廳分為外場與內場，分別設定餐期人數、薪資及計時支援；營業天數為餐廳共用。</p></div><button type="button" class="btn" id="resetBtn">恢復示範資料</button></div><div id="units"></div><div class="warning"><b>模型邊界：</b>外場與內場已獨立計算，但仍採「午晚各4小時、每餐期同樣人數」的標準基準。全正職制假設兩餐期完全由不同正職組別負責、所以人力倍增；混合制維持原正職人數並增加指定計時工時。模型尚未自動驗證時段覆蓋，也未估算額外工作內容；實施前須確認實際班表。</div></section>
-<section class="panel simple-only"><h2>餐廳別成本比較</h2><p class="intro">增幅皆以「該餐廳原有正職成本」為分母；年度金額採12個月。</p><div class="tablewrap"><table><thead><tr><th>餐廳／單位</th><th>部門</th><th>現況FTE</th><th>原月成本</th><th>混合制新增/月</th><th>混合制增幅</th><th>全正職新增/月</th><th>全正職增幅</th><th>混合制新增/年</th></tr></thead><tbody id="resultRows"></tbody><tfoot id="resultFoot"></tfoot></table></div></section>
-<section class="panel simple-only"><h2>全館每月成本對照</h2><p class="intro">將「現況」與「新班制總成本」比較，而非僅比較增額。</p><div class="bar-block" id="costBars"></div></section>
-<section class="panel simple-only"><h2>財務判讀</h2><div id="decision" style="line-height:1.85"></div><details><summary>計算方法與適用限制</summary><ul><li>內場與外場各自計算：現況全職當量（FTE）＝該部門每餐期需求人數 × 每週營業天數 ÷ 5。假設每人每天兩餐期各工作4小時，每週正常工時40小時。</li><li>各部門現況月成本＝該部門FTE × 該部門正職平均月薪 ×（1＋正職附加成本率）。</li><li>各部門混合制新增月成本＝該部門每餐期人數 × 該部門每日計時補班小時 × 每週營業天數 × 年換算週數 ÷ 12 × 該部門計時時薪 ×（1＋計時附加成本率）。</li><li>全正職制新增成本＝現況月成本。這是「午晚各組人力、不共享」的保守方案，並非所有一頭班都必須倍增。</li><li>本模型未單獨計算國定假日出勤、加班、特休及請假替補、招募訓練費、年終獎金、分店薪級差、實際計時最短班長及跨單位調度。若其已列入平均成本或附加成本，不應重複列入。</li><li>使用於董事會或正式年度預算前，必須根據營運時段與30分鐘人力需求，核實班表是否能覆蓋全部服務時段。</li></ul></details></section>
+<section class="panel simple-only"><h2>餐廳別成本比較</h2><p class="intro">增幅以各部門現況月成本（含設定的津貼）為分母。年度金額採 12 個月。</p><div class="tablewrap"><table><thead><tr><th>餐廳／單位</th><th>部門</th><th>現況FTE</th><th>原月成本</th><th>混合制新增/月</th><th>混合制增幅</th><th>全正職新增/月</th><th>全正職增幅</th><th>混合制新增/年</th></tr></thead><tbody id="resultRows"></tbody><tfoot id="resultFoot"></tfoot></table></div></section>
+<section class="panel simple-only"><h2>全館每月成本對照</h2><p class="intro">將「現況」與「新班制總成本」比較，而非僅比較增額。</p><div class="bar-block" id="costBars"></div><aside class="insight-card"><h3>🤝 雇主品牌與招募優勢：符合新世代生活型態的排班制</h3>
+<ul>
+<li><strong>擴大招募漏斗</strong>：當市場上多數餐廳仍維持兩頭班時，提供「一頭班」選項能直接解決年輕世代與雙薪家庭（需兼顧家庭與接送）的痛點，大幅提升履歷投遞率與到職率。</li>
+<li><strong>混合制的財務平衡點</strong>：「正職一頭班＋計時補尖峰」能將固定人力成本控制在合理水位，同時確保核心正職團隊的穩定度，是目前餐飲業轉型最務實的過渡與長期方案。</li>
+</ul></aside>
+</section>
+<section class="panel simple-only"><h2>財務判讀</h2><div id="decision" style="line-height:1.85"></div><details><summary>計算方法與適用限制</summary><ul><li>內場與外場各自計算：現況全職當量（FTE）＝該部門每餐期需求人數 × 每週營業天數 ÷ 5。假設每人每天兩餐期各工作4小時，每週正常工時40小時。</li><li>各部門現況月成本＝該部門FTE × （該部門正職平均月薪 ×（1＋正職附加成本率）＋每人月津貼）。</li><li>各部門混合制新增月成本＝該部門每餐期人數 × 該部門每日計時補班小時 × 每週營業天數 × 年換算週數 ÷ 12 × 該部門計時時薪 ×（1＋計時附加成本率）－現況月津貼。</li><li>全正職制新增成本＝現況未含津貼的月成本－現況月津貼。這是「午晚各組人力、不共享」的保守方案，並非所有一頭班都必須倍增。</li><li>本模型未單獨計算國定假日出勤、加班、特休及請假替補、招募訓練費、年終獎金、分店薪級差、實際計時最短班長及跨單位調度。若其已列入平均成本或附加成本，不應重複列入。</li><li>使用於董事會或正式年度預算前，必須根據營運時段與30分鐘人力需求，核實班表是否能覆蓋全部服務時段。</li></ul></details></section>
 
 <section id="scenarioSection" class="hidden" aria-label="餐種與場域情境模擬">
 <section class="panel edit-area"><div class="units-head"><div><h2>餐種 × 場域 × 服務等級｜情境模擬</h2><p class="intro">根據餐種及營業地點產生平日／假日每30分鐘的外場、內場需求；點「執行模擬」才重新計算。參數為管理估算假設，並非產業標準編制。</p></div></div>
@@ -81,21 +98,36 @@ tbody tr:hover{background:#faf7ef}
 </div>
 <div class="button-group" style="margin-top:18px"><button id="runScenario" type="button" class="btn primary">執行模擬</button><button id="scApply" type="button" class="btn" disabled>套用平日需求至詳細版</button><button id="scCsv" type="button" class="btn" disabled>匯出情境明細 CSV</button></div><p class="note" style="margin-top:10px">「營業量」調整每餐出餐／服務負荷；「服務精緻度」以外場為主要影響；「內場製程複雜度」主要影響廚房；正職工時比為排班規劃約束，非法律規定。宴會廳以指定座位數視為單場宴會容量，非每天固定滿席。</p>
 </section>
+<aside class="insight-card"><h3>🎯 現場主管實戰指南：告別排班地獄與無限輪迴的新人培訓</h3>
+<ul>
+<li><strong>離峰產能再分配，尖峰出餐更順暢</strong>：下午離峰時段（14:00–17:00）不再是沒人用的空窗期。一頭班同仁可將原先在尖峰時段極度壓縮的「備料、盤點、環境深度清潔、叫貨」提前或延後完成，讓午晚餐期能 100% 專注於出餐與顧客服務。</li>
+<li><strong>留住熟手，降低管理耗損</strong>：排班不再需要為了補 1–2 小時的缺口而四處求人。穩定的班表能留住核心戰力，大幅減少主廚與外場經理每天花在「改班表、找代班、重複訓練新人」的心力耗損。</li>
+</ul></aside>
 <div id="scenarioResults" class="hidden"><section class="panel"><h2>模擬結果｜成本及編制</h2><div id="scenarioHeadline" class="scenario-kpis"></div><div id="scenarioNarrative" class="warning"></div><div class="tablewrap"><table><thead><tr><th>日期／部門</th><th>原兩頭班基準FTE＊</th><th>新制正職FTE</th><th>新制計時人時／週</th><th>原月成本</th><th>新制月成本</th><th>月增減</th><th>人力覆蓋</th></tr></thead><tbody id="scenarioRows"></tbody></table></div><p class="note">＊原兩頭班基準為依需求尖峰反推的「示範編制」，不是飯店既有實際編制。正式報告必須替換成現有人事費及實際FTE。平日／假日按每週營業天數加權。正職薪資採每人每月固定成本；FTE為平均編制需求，需依排休及假勤上修。</p></section><section class="panel"><h2>人力需求曲線與班次建議</h2><div id="scenarioChart"></div><div id="scenarioShiftTable"></div></section><section class="panel"><h2>重要假設及限制</h2><div id="scenarioAssumptions" class="note"></div></section><section class="panel"><h2>情境成本口徑</h2><p class="note" id="scenarioRates"></p>
 <details class="print-terms"><summary>財務公式與人力覆蓋</summary><ul class="formula-list">
 <li>平日、假日、外場與內場分開計算。現況 FTE＝當日最高需求人數 × 該類營業天數 ÷ 5。新制正職 FTE＝當日正職班出勤人數 × 該類營業天數 ÷ 5。</li>
-<li>正職月成本＝FTE × 月薪 ×（1＋正職附加成本率）。計時月成本＝每週計時人時 × 52 ÷ 12 × 時薪 ×（1＋計時附加成本率）。</li>
+<li>現況先計入現況 FTE × 每人月津貼。正職月薪成本＝FTE × 月薪 ×（1＋正職附加成本率）。計時月成本＝每週計時人時 × 52 ÷ 12 × 時薪 ×（1＋計時附加成本率）。</li>
 <li>新制月成本＝正職月成本＋計時月成本。月增減＝新制月成本－現況月成本。年度增減＝月增減 × 12。</li>
 <li>每週人力缺口＝各半小時未覆蓋人數 × 0.5 小時 × 該類每週營業天數，再加總外場與內場。</li>
 </ul></details></section></div>
 </section>
 <section id="detailSection" class="hidden" aria-label="分時段試算設定">
  <section class="panel edit-area"><h2>逐半小時需求與班次</h2><p class="intro">每間餐廳分別設定外場、內場。以每日09:00–23:00、每30分鐘為單位輸入「當下必須在場的人數」，再設定早班、晚班、計時班及休息時段。每日需求預設為每個營業日相同，其他差異可建立另一個餐廳情境比較。</p><div class="warning"><b>計算邏輯：</b>詳細版將「現況編制FTE」與「新排班需求FTE」分開比較，允許得出負增額；班表不滿足需求時會標示缺口，<b>不能將未覆蓋的低成本方案視為可行方案</b>。自動建議是固定三種班型下的成本最小整數組合，並非全飯店跨部門最佳化。</div><div id="detailUnits"></div></section>
- <section class="panel"><h2>全館與餐廳別成本比較</h2><p class="intro">每個部門現況FTE獨立輸入；新制正職FTE按每日班次人數 × 每週營業天數 ÷ 5 計算，計時成本按實際排班小時計算。</p><div class="tablewrap"><table><thead><tr><th>餐廳</th><th>部門</th><th>覆蓋</th><th>現況FTE</th><th>新制FTE</th><th>計時人時/月</th><th>原月成本</th><th>新制月成本</th><th>每月增減</th><th>每年增減</th></tr></thead><tbody id="detailRows"></tbody><tfoot id="detailFoot"></tfoot></table></div></section>
- <section class="panel"><h2>班次覆蓋檢核</h2><p class="intro">圖中「需求」為輸入的最低在場人數，「覆蓋」為班次扣除休息後的實際在場人數；紅色代表缺人。0需求時段不必排班。</p><div id="coverageCharts"></div></section>
+ <section class="panel"><h2>全館與餐廳別成本比較</h2><p class="intro">每個部門現況FTE獨立輸入；新制正職FTE按每日班次人數 × 每週營業天數 ÷ 5 計算，計時成本按實際排班小時計算。</p><div class="tablewrap"><table><thead><tr><th>餐廳</th><th>部門</th><th>覆蓋</th><th>現況FTE</th><th>新制FTE</th><th>計時人時/月</th><th>原月成本</th><th>新制月成本</th><th>每月增減</th><th>每年增減</th></tr></thead><tbody id="detailRows"></tbody><tfoot id="detailFoot"></tfoot></table></div><aside class="insight-card"><h3>🤝 雇主品牌與招募優勢：符合新世代生活型態的排班制</h3>
+<ul>
+<li><strong>擴大招募漏斗</strong>：當市場上多數餐廳仍維持兩頭班時，提供「一頭班」選項能直接解決年輕世代與雙薪家庭（需兼顧家庭與接送）的痛點，大幅提升履歷投遞率與到職率。</li>
+<li><strong>混合制的財務平衡點</strong>：「正職一頭班＋計時補尖峰」能將固定人力成本控制在合理水位，同時確保核心正職團隊的穩定度，是目前餐飲業轉型最務實的過渡與長期方案。</li>
+</ul></aside>
+</section>
+ <section class="panel"><h2>班次覆蓋檢核</h2><p class="intro">圖中「需求」為輸入的最低在場人數，「覆蓋」為班次扣除休息後的實際在場人數；紅色代表缺人。0需求時段不必排班。</p><div id="coverageCharts"></div><aside class="insight-card"><h3>🎯 現場主管實戰指南：告別排班地獄與無限輪迴的新人培訓</h3>
+<ul>
+<li><strong>離峰產能再分配，尖峰出餐更順暢</strong>：下午離峰時段（14:00–17:00）不再是沒人用的空窗期。一頭班同仁可將原先在尖峰時段極度壓縮的「備料、盤點、環境深度清潔、叫貨」提前或延後完成，讓午晚餐期能 100% 專注於出餐與顧客服務。</li>
+<li><strong>留住熟手，降低管理耗損</strong>：排班不再需要為了補 1–2 小時的缺口而四處求人。穩定的班表能留住核心戰力，大幅減少主廚與外場經理每天花在「改班表、找代班、重複訓練新人」的心力耗損。</li>
+</ul><p id="coverageInsight" class="insight-status" aria-live="polite" hidden></p></aside>
+</section>
  <section class="panel"><h2>成本與覆蓋判讀</h2><div id="detailDecision" class="note"></div>
 <details class="print-terms"><summary>財務公式與覆蓋口徑</summary><ul class="formula-list">
-<li>現況月成本＝現況正職 FTE × 正職月薪 ×（1＋正職附加成本率）。</li>
+<li>現況月成本＝現況正職 FTE ×（正職月薪 ×（1＋正職附加成本率）＋每人月津貼）。</li>
 <li>新制正職 FTE＝正職班每日出勤人數合計 × 每週營業天數 ÷ 5。假設每班有薪 8 小時。</li>
 <li>新制月成本＝新制正職 FTE × 正職月薪 ×（1＋正職附加成本率）＋每月計時人時 × 計時時薪 ×（1＋計時附加成本率）。</li>
 <li>每月計時人時＝每日計時人時 × 每週營業天數 × 年換算週數 ÷ 12。年度增減＝（新制月成本－現況月成本）× 12。</li>
@@ -106,17 +138,26 @@ tbody tr:hover{background:#faf7ef}
 </main>
 <script>
 'use strict';
-const DEFAULT={salary:42000,benefit:18,ptWage:230,ptBenefit:10,weeks:52,units:[{id:1,name:'中餐廳（示範）',days:7,foh:{peak:10,salary:42000,ptWage:230,ptHours:2},boh:{peak:8,salary:48000,ptWage:260,ptHours:3}}]};
+const BENEFIT_DEFAULTS={splitAllowance:0,avoidedDepartures:0,turnoverCost:60000};
+const DEFAULT={...BENEFIT_DEFAULTS,salary:42000,benefit:18,ptWage:230,ptBenefit:10,weeks:52,units:[{id:1,name:'中餐廳（示範）',days:7,foh:{peak:10,salary:42000,ptWage:230,ptHours:2},boh:{peak:8,salary:48000,ptWage:260,ptHours:3}}]};
 const KEY='restaurant-shift-simulator-v2';
 const clone=o=>JSON.parse(JSON.stringify(o));
 const $=id=>document.getElementById(id);
 function num(v,fallback=0){if(v===undefined||v===null||v==='')return fallback;const n=Number(v);return Number.isFinite(n)?Math.max(0,n):fallback}
 function normDept(d,defaultSalary,defaultWage,peak,ptHours){return {peak:num(d?.peak,peak),salary:num(d?.salary,defaultSalary),ptWage:num(d?.ptWage,defaultWage),ptHours:num(d?.ptHours,ptHours)}}
-function normalize(v){let salary=num(v.salary,42000),ptWage=num(v.ptWage,230);return {salary,benefit:num(v.benefit,18),ptWage,ptBenefit:num(v.ptBenefit,10),weeks:num(v.weeks,52),units:(Array.isArray(v.units)?v.units:[]).slice(0,100).map((u,i)=>({id:i+1,name:String(u.name||'未命名餐廳').slice(0,80),days:num(u.days,7),foh:normDept(u.foh,salary,ptWage,num(u.peak,10),num(u.ptHours,2)),boh:normDept(u.boh,48000,260,u.foh?8:0,u.foh?3:0)}))}}
+function normalize(v){let salary=num(v.salary,42000),ptWage=num(v.ptWage,230);return {salary,
+  splitAllowance:num(v.splitAllowance,BENEFIT_DEFAULTS.splitAllowance),
+  avoidedDepartures:num(v.avoidedDepartures,BENEFIT_DEFAULTS.avoidedDepartures),
+  turnoverCost:num(v.turnoverCost,BENEFIT_DEFAULTS.turnoverCost),
+  benefit:num(v.benefit,18),ptWage,ptBenefit:num(v.ptBenefit,10),weeks:num(v.weeks,52),units:(Array.isArray(v.units)?v.units:[]).slice(0,100).map((u,i)=>({id:i+1,name:String(u.name||'未命名餐廳').slice(0,80),days:num(u.days,7),foh:normDept(u.foh,salary,ptWage,num(u.peak,10),num(u.ptHours,2)),boh:normDept(u.boh,48000,260,u.foh?8:0,u.foh?3:0)}))}}
 function load(){try{const v=JSON.parse(localStorage.getItem(KEY));if(v&&Array.isArray(v.units)&&v.units.length)return normalize(v);const old=JSON.parse(localStorage.getItem('restaurant-shift-simulator-v1'));if(old&&Array.isArray(old.units)&&old.units.length)return normalize(old)}catch(e){}return clone(DEFAULT)}
 let model=load();function persist(){try{localStorage.setItem(KEY,JSON.stringify(model))}catch(e){}}
-const nt=n=>Math.round(n).toLocaleString('zh-TW');const money=n=>'NT$ '+nt(n);const pct=n=>Number.isFinite(n)?n.toFixed(1)+'%':'—';
-function calcDept(u,kind){const x=u[kind],fte=x.peak*u.days/5,base=fte*x.salary*(1+model.benefit/100),part=x.peak*x.ptHours*u.days*model.weeks/12*x.ptWage*(1+model.ptBenefit/100);return {id:u.id,name:u.name,kind,label:kind==='foh'?'外場':'內場',peak:x.peak,days:u.days,salary:x.salary,ptWage:x.ptWage,ptHours:x.ptHours,fte,base,part,full:base,mixed:base+part,fullTotal:base*2}}
+let displayCurrency='TWD';
+let displayRate=1;
+const nt=n=>Math.round(n).toLocaleString('zh-TW');
+const money=n=>displayCurrency==='TWD'?'NT$ '+nt(n):
+  new Intl.NumberFormat('en-US',{style:'currency',currency:displayCurrency,currencyDisplay:'code'}).format(n*displayRate);const pct=n=>Number.isFinite(n)?n.toFixed(1)+'%':'—';
+function calcDept(u,kind){const x=u[kind],fte=x.peak*u.days/5,base=fte*x.salary*(1+model.benefit/100),part=x.peak*x.ptHours*u.days*model.weeks/12*x.ptWage*(1+model.ptBenefit/100);const allowance=fte*model.splitAllowance;return {id:u.id,name:u.name,kind,label:kind==='foh'?'外場':'內場',peak:x.peak,days:u.days,salary:x.salary,ptWage:x.ptWage,ptHours:x.ptHours,fte,base:base+allowance,part:part-allowance,full:base-allowance,mixed:base+part,fullTotal:base*2}}
 function results(){return model.units.flatMap(u=>[calcDept(u,'foh'),calcDept(u,'boh')])}
 function total(rows){return rows.reduce((a,r)=>({fte:a.fte+r.fte,base:a.base+r.base,part:a.part+r.part,full:a.full+r.full,mixed:a.mixed+r.mixed,fullTotal:a.fullTotal+r.fullTotal}),{fte:0,base:0,part:0,full:0,mixed:0,fullTotal:0})}
 function el(tag,attrs={},str){const e=document.createElement(tag);Object.entries(attrs).forEach(([k,v])=>{if(k==='className')e.className=v;else e.setAttribute(k,v)});if(str!=null)e.textContent=str;return e}
@@ -124,11 +165,30 @@ function makeField(obj,field,label,help,min,max,step){const wrap=el('div',{class
 function deptSection(u,kind,title){const d=u[kind],section=el('div',{className:'dept-section'}),heading=el('h3',{},title),g=el('div',{className:'controls'});g.append(makeField(d,'peak','每餐期需求（人）','午晚餐各自需要的現場人力',0,1000,1),makeField(d,'salary','正職平均月薪（元）','僅套用這間餐廳的'+title,0,1000000,500),makeField(d,'ptWage','計時時薪（元）','僅套用這間餐廳的'+title,0,10000,5),makeField(d,'ptHours','每日計時補班（小時）','該部門每名計時人員支援時數',0,12,.5));const res=el('div',{className:'unit-result',id:'unitResult-'+u.id+'-'+kind});section.append(heading,g,res);return section}
 function renderUnits(){const target=$('units');target.replaceChildren();model.units.forEach(u=>{const card=el('div',{className:'unit'}),top=el('div',{className:'unit-title'}),name=el('input',{type:'text',maxlength:'80','aria-label':'餐廳名稱'});name.value=u.name;name.addEventListener('input',()=>{u.name=name.value;renderResults()});const del=el('button',{className:'btn danger',type:'button'},'刪除餐廳');del.disabled=model.units.length===1;del.addEventListener('click',()=>{if(model.units.length===1)return;model.units=model.units.filter(v=>v.id!==u.id);renderUnits();renderResults()});top.append(name,del);const days=el('div',{className:'days-row'});days.append(makeField(u,'days','每週營業天數','外場與內場共用營業天數',0,7,1));card.append(top,days,deptSection(u,'foh','外場｜服務人員'),deptSection(u,'boh','內場｜廚房人員'));target.append(card)})}
 function addCells(tr,values,cls={}){values.forEach((v,i)=>tr.append(el('td',cls[i]?{className:cls[i]}:{},v)))}
-function renderResults(){const rows=results(),t=total(rows);$('baseMonth').textContent=money(t.base);$('baseFte').textContent='約 '+t.fte.toFixed(1)+' 名全職當量（FTE）';$('mixedAdd').textContent=money(t.part);$('mixedPct').textContent='原成本增加 '+pct(t.base?t.part/t.base*100:NaN);$('fullAdd').textContent=money(t.full);$('fullPct').textContent='原成本增加 '+pct(t.base?100:NaN);$('mixedYear').textContent=money(t.part*12);$('deltaFull').textContent='比全正職方案每年少 '+money((t.full-t.part)*12);
-const tbody=$('resultRows');tbody.replaceChildren();for(const r of rows){const tr=el('tr');addCells(tr,[r.name,r.label,r.fte.toFixed(1),money(r.base),money(r.part),pct(r.base?r.part/r.base*100:NaN),money(r.full),pct(r.base?100:NaN),money(r.part*12)],{4:'pos'});tbody.append(tr);const b=$('unitResult-'+r.id+'-'+r.kind);if(b){b.replaceChildren();['現況FTE：'+r.fte.toFixed(1),'原月成本：'+money(r.base),'混合制每月新增：'+money(r.part),'增幅：'+pct(r.base?r.part/r.base*100:NaN)].forEach(v=>b.append(el('span',{},v)))}}
-const footer=$('resultFoot');footer.replaceChildren();for(const [name,which] of [['外場合計',rows.filter(r=>r.kind==='foh')],['內場合計',rows.filter(r=>r.kind==='boh')],['全館合計',rows]]){const sub=total(which),tr=el('tr');addCells(tr,[name,'',sub.fte.toFixed(1),money(sub.base),money(sub.part),pct(sub.base?sub.part/sub.base*100:NaN),money(sub.full),pct(sub.base?100:NaN),money(sub.part*12)]);footer.append(tr)}
+function costBadge(cell, tone) {
+  const value=cell.textContent;
+  cell.replaceChildren(el('span',{className:'result-badge '+tone},value));
+}
+function costTone(delta) {return delta>0?'is-warning':delta<0?'is-good':'is-neutral'}
+function investmentInsight(mixedYear, fullYear=0, mixedLabel='混合制') {
+  const target=$('investmentInsight');
+  const annual=mixedYear>0?mixedYear:fullYear;
+  const label=mixedYear>0?mixedLabel:'全正職制';
+  target.hidden=!(annual>0);
+  target.textContent=target.hidden?'':'📊 決策參考：以目前試算的「'+label+'」為例，每年預計多投入約 '+money(annual)+(displayCurrency==='TWD'?' 元':'')+'；若此變革能為全館每年減少 '+nt(Math.ceil(annual/90000))+' 位正職離職（以單人招募培訓與空窗隱性成本約 '+money(90000)+' 計），並避免因缺工造成的縮減餐期損失，實質營運成本將大幅低於帳面數字。';
+}
+function appendTurnoverEffect(target,annualDelta,label='混合制') {
+  const savings=model.avoidedDepartures*model.turnoverCost;
+  if (savings>0) target.append(el('p',{className:'insight-status'},'計入減少離職之隱性效益後，'+label+'實質年增成本約為：'+money(annualDelta-savings)+'（預估年度離職折抵 '+money(savings)+'）。'));
+}
+function renderResults(){const rows=results(),t=total(rows);$('baseMonth').textContent=money(t.base);$('baseFte').textContent='約 '+t.fte.toFixed(1)+' 名全職當量（FTE）';$('mixedAdd').textContent=money(t.part);$('mixedPct').textContent='原成本增減 '+pct(t.base?t.part/t.base*100:NaN);$('fullAdd').textContent=money(t.full);$('fullPct').textContent='原成本增減 '+pct(t.base?t.full/t.base*100:NaN);$('mixedYear').textContent=money(t.part*12);$('deltaFull').textContent='比全正職方案每年少 '+money((t.full-t.part)*12);
+const tbody=$('resultRows');tbody.replaceChildren();for(const r of rows){const tr=el('tr');addCells(tr,[r.name,r.label,r.fte.toFixed(1),money(r.base),money(r.part),pct(r.base?r.part/r.base*100:NaN),money(r.full),pct(r.base?r.full/r.base*100:NaN),money(r.part*12)]);costBadge(tr.children[5],costTone(r.part));costBadge(tr.children[7],costTone(r.full));tbody.append(tr);const b=$('unitResult-'+r.id+'-'+r.kind);if(b){b.replaceChildren();['現況FTE：'+r.fte.toFixed(1),'原月成本：'+money(r.base),'混合制每月新增：'+money(r.part),'增幅：'+pct(r.base?r.part/r.base*100:NaN)].forEach(v=>b.append(el('span',{},v)))}}
+const footer=$('resultFoot');footer.replaceChildren();for(const [name,which] of [['外場合計',rows.filter(r=>r.kind==='foh')],['內場合計',rows.filter(r=>r.kind==='boh')],['全館合計',rows]]){const sub=total(which),tr=el('tr');addCells(tr,[name,'',sub.fte.toFixed(1),money(sub.base),money(sub.part),pct(sub.base?sub.part/sub.base*100:NaN),money(sub.full),pct(sub.base?sub.full/sub.base*100:NaN),money(sub.part*12)]);costBadge(tr.children[5],costTone(sub.part));costBadge(tr.children[7],costTone(sub.full));footer.append(tr)}
 const bars=$('costBars');bars.replaceChildren();const data=[['現行兩頭班',t.base,'#607890'],['混合一頭班',t.mixed,'#167e83'],['全正職一頭班',t.fullTotal,'#be7331']],max=Math.max(...data.map(v=>v[1]),1);for(const [name,val,color] of data){const line=el('div',{className:'barline'}),track=el('div',{className:'track'}),fill=el('div',{className:'fill'});fill.style.width=val/max*100+'%';fill.style.background=color;track.append(fill);line.append(el('span',{},name),track,el('b',{},money(val)));bars.append(line)}
-const fo=total(rows.filter(r=>r.kind==='foh')),bo=total(rows.filter(r=>r.kind==='boh'));const decision=$('decision');decision.replaceChildren(el('p',{},'依目前設定，混合一頭班每年新增 '+money(t.part*12)+'，其中外場 '+money(fo.part*12)+'、內場 '+money(bo.part*12)+'；全正職一頭班每年新增 '+money(t.full*12)+'。'),el('p',{},'此處將內外場的人數、薪資與計時工時分別估算，但仍使用同一個簡化的雙餐期模型。廚房備料與收尾、外場開餐前後工作、休息與交疊時段，應進一步以30分鐘實際需求表校驗，才能作為正式編制預算。'));persist()}
+const fo=total(rows.filter(r=>r.kind==='foh')),bo=total(rows.filter(r=>r.kind==='boh'));const decision=$('decision');decision.replaceChildren(el('p',{},'依目前設定，混合一頭班每年新增 '+money(t.part*12)+'，其中外場 '+money(fo.part*12)+'、內場 '+money(bo.part*12)+'；全正職一頭班每年新增 '+money(t.full*12)+'。'),el('p',{},'此處將內外場的人數、薪資與計時工時分別估算，但仍使用同一個簡化的雙餐期模型。廚房備料與收尾、外場開餐前後工作、休息與交疊時段，應進一步以30分鐘實際需求表校驗，才能作為正式編制預算。'));
+appendTurnoverEffect(decision,t.part*12);
+investmentInsight(t.part*12,t.full*12);
+persist()}
 function syncGlobals(){document.querySelectorAll('[data-global]').forEach(input=>{input.value=model[input.dataset.global];input.oninput=()=>{model[input.dataset.global]=num(input.value);renderResults()}})}
 function render(){syncGlobals();renderUnits();renderResults()}
 function download(name,content,mime){name=localText(name);const blob=new Blob(['﻿',content],{type:mime}),url=URL.createObjectURL(blob),a=el('a',{href:url,download:name});document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
@@ -140,6 +200,9 @@ $('exportJSON').addEventListener('click',()=>download('餐飲班制模擬設定_
 $('importJSON').addEventListener('click',()=>$('fileInput').click());$('fileInput').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{const v=JSON.parse(await file.text());if(!Array.isArray(v.units)||!v.units.length)throw Error('沒有餐廳資料');model=normalize(v);render();showMessage('已匯入設定（舊版資料的原編制視為外場，內場預設0人，請補填）')}catch(err){showMessage('匯入失敗：'+err.message)}e.target.value=''});
 $('addUnit').addEventListener('click',()=>{const id=Math.max(0,...model.units.map(x=>x.id))+1;model.units.push({id,name:'新增餐廳 '+id,days:7,foh:{peak:10,salary:model.salary,ptWage:model.ptWage,ptHours:2},boh:{peak:8,salary:48000,ptWage:260,ptHours:3}});renderUnits();renderResults()});
 $('resetBtn').addEventListener('click',()=>{if(confirm(localText('確定恢復示範資料？目前設定將被取代。'))){model=clone(DEFAULT);render()}});
+window.addEventListener('beforeprint',()=>{
+  $('reportMode').textContent=document.querySelector('.mode-tab.active').textContent;
+});
 $('printBtn').addEventListener('click',()=>window.print());render();
 </script>
 <script>
@@ -161,7 +224,7 @@ function shiftValid(s){if(s.type==='pt')return s.end>s.start&&s.end-s.start<=16;
 function coverage(v){const coverage=Array(SLOT_COUNT).fill(0);for(const s of v.shifts){if(!shiftValid(s))continue;for(let i=SLOT_START;i<SLOT_END;i++){const working=i>=s.start&&i<s.end&&(s.type==='pt'||i<s.breakStart||i>=s.breakStart+2);if(working)coverage[i-SLOT_START]+=cleanInt(s.count,200);}}return coverage}
 function detailCalc(u,kind){const v=getDetail(u,kind),d=u[kind];const cov=coverage(v),min=v.demand;let gaps=0,gapHours=0,excessHours=0,neededHours=0;for(let j=0;j<SLOT_COUNT;j++){let miss=Math.max(0,min[j]-cov[j]),excess=Math.max(0,cov[j]-min[j]);if(miss)gaps++;gapHours+=miss*.5;excessHours+=excess*.5;neededHours+=min[j]*.5;}
  const full=v.shifts.filter(s=>s.type==='full').reduce((a,s)=>a+cleanInt(s.count,200),0);const ptDaily=v.shifts.filter(s=>s.type==='pt').reduce((a,s)=>a+cleanInt(s.count,200)*(s.end-s.start)/2,0);
- const original=v.baselineFte*d.salary*(1+model.benefit/100);const newFte=full*u.days/5;const fullCost=newFte*d.salary*(1+model.benefit/100);const ptMonthHours=ptDaily*u.days*model.weeks/12;const ptCost=ptMonthHours*d.ptWage*(1+model.ptBenefit/100);const invalid=v.shifts.some(s=>!shiftValid(s));return {name:u.name,kind,label:DEPT_NAMES[kind],oldFte:v.baselineFte,newFte,ptMonthHours,base:original,newCost:fullCost+ptCost,delta:fullCost+ptCost-original,gaps,gapHours,excessHours,neededHours,invalid,cov,v,u};}
+ const original=v.baselineFte*d.salary*(1+model.benefit/100)+v.baselineFte*model.splitAllowance;const newFte=full*u.days/5;const fullCost=newFte*d.salary*(1+model.benefit/100);const ptMonthHours=ptDaily*u.days*model.weeks/12;const ptCost=ptMonthHours*d.ptWage*(1+model.ptBenefit/100);const invalid=v.shifts.some(s=>!shiftValid(s));return {name:u.name,kind,label:DEPT_NAMES[kind],oldFte:v.baselineFte,newFte,ptMonthHours,base:original,newCost:fullCost+ptCost,delta:fullCost+ptCost-original,gaps,gapHours,excessHours,neededHours,invalid,cov,v,u};}
 function detailField(label,value,onChange,opts={}){const box=el('div',{className:'field'});const lab=el('label',{},label);const inp=el('input',{type:'number',min:opts.min??0,max:opts.max??999,step:opts.step??1,'aria-label':label});inp.value=value;inp.addEventListener('change',()=>{onChange(inp.value);persistDetail();drawDetails()});box.append(lab,inp);return box}
 function timeSelect(value,onchange,allowNone=false){const select=el('select',{'aria-label':'時間'});if(allowNone)select.append(el('option',{value:'-1'},'不休息'));for(let i=SLOT_START;i<=SLOT_END;i++)select.append(el('option',{value:String(i)},DTIME(i)));select.value=String(value);select.addEventListener('change',()=>{onchange(Number(select.value));persistDetail();drawDetails()});return select}
 function detailUnit(u){const card=el('div',{className:'detail-unit'}),title=el('div',{className:'detail-head'});title.append(el('h3',{},u.name),el('span',{className:'note'},'每週營業 '+u.days+' 天 · 與簡易版共用餐廳名稱、薪資及營業天數'));card.append(title);
@@ -179,10 +242,21 @@ for(let a=0;a<=peak;a++)for(let b=0;b<=peak;b++){
  let pt=0,feasible=true;for(let j=0;j<SLOT_COUNT;j++){const rest=demand[j]-a*cover[0][j]-b*cover[1][j];if(rest<=0)continue;if(!cover[2][j]){feasible=false;break}pt=Math.max(pt,rest);}if(!feasible||pt>peak)continue;const cost=(a+b)*rate+pt*ptrate;if(cost<minCost){minCost=cost;best=[a,b,pt]}}
 return best;}
 function sumD(rows){return rows.reduce((a,r)=>({base:a.base+r.base,newCost:a.newCost+r.newCost,delta:a.delta+r.delta,oldFte:a.oldFte+r.oldFte,newFte:a.newFte+r.newFte,ptMonthHours:a.ptMonthHours+r.ptMonthHours,gaps:a.gaps+r.gaps,gapHours:a.gapHours+r.gapHours,invalid:a.invalid||r.invalid}),{base:0,newCost:0,delta:0,oldFte:0,newFte:0,ptMonthHours:0,gaps:0,gapHours:0,invalid:false})}
-function detailRecalc(){if(activeMode!=='detail')return;const rows=model.units.flatMap(u=>['foh','boh'].map(k=>detailCalc(u,k))),t=sumD(rows);$('baseMonth').textContent=money(t.base);$('baseFte').textContent='現況 '+t.oldFte.toFixed(1)+' FTE';$('mixedAdd').textContent=(t.delta>=0?'+':'−')+money(Math.abs(t.delta));$('mixedPct').textContent='詳細版新制增減 '+pct(t.base?t.delta/t.base*100:NaN);$('fullAdd').textContent=money(t.newCost);$('fullPct').textContent='新制每月總成本';$('mixedYear').textContent=(t.delta>=0?'+':'−')+money(Math.abs(t.delta*12));$('deltaFull').textContent=t.invalid?'警示：班次設定異常':t.gaps?'警示：'+t.gaps+' 個半小時缺人時段':'全部人力需求已覆蓋';const body=$('detailRows');body.replaceChildren();for(const r of rows){const tr=el('tr');addCells(tr,[r.name,r.label,r.invalid?'班次錯誤':r.gaps?'缺口 '+r.gapHours.toFixed(1)+'人時/日':'符合',r.oldFte.toFixed(1),r.newFte.toFixed(1),r.ptMonthHours.toFixed(1),money(r.base),money(r.newCost),(r.delta>=0?'+':'−')+money(Math.abs(r.delta)),(r.delta>=0?'+':'−')+money(Math.abs(r.delta*12))]);if(r.gaps||r.invalid)tr.children[2].className='text-warning';body.append(tr)}const foot=$('detailFoot');foot.replaceChildren();for(const [name,subrows] of [['外場合計',rows.filter(x=>x.kind==='foh')],['內場合計',rows.filter(x=>x.kind==='boh')],['全館合計',rows]]){const v=sumD(subrows),tr=el('tr');addCells(tr,[name,'',v.invalid?'班次設定異常':v.gaps?'缺口 '+v.gapHours.toFixed(1)+'人時/日':'符合',v.oldFte.toFixed(1),v.newFte.toFixed(1),v.ptMonthHours.toFixed(1),money(v.base),money(v.newCost),(v.delta>=0?'+':'−')+money(Math.abs(v.delta)),(v.delta>=0?'+':'−')+money(Math.abs(v.delta*12))]);foot.append(tr)}
+function detailRecalc(){if(activeMode!=='detail')return;const rows=model.units.flatMap(u=>['foh','boh'].map(k=>detailCalc(u,k))),t=sumD(rows);$('baseMonth').textContent=money(t.base);$('baseFte').textContent='現況 '+t.oldFte.toFixed(1)+' FTE';$('mixedAdd').textContent=(t.delta>=0?'+':'−')+money(Math.abs(t.delta));$('mixedPct').textContent='詳細版新制增減 '+pct(t.base?t.delta/t.base*100:NaN);$('fullAdd').textContent=money(t.newCost);$('fullPct').textContent='新制每月總成本';$('mixedYear').textContent=(t.delta>=0?'+':'−')+money(Math.abs(t.delta*12));$('deltaFull').textContent=t.invalid?'警示：班次設定異常':t.gaps?'警示：'+t.gaps+' 個半小時缺人時段':'全部人力需求已覆蓋';const body=$('detailRows');body.replaceChildren();for(const r of rows){const tr=el('tr');addCells(tr,[r.name,r.label,r.invalid?'班次錯誤':r.gaps?'缺口 '+r.gapHours.toFixed(1)+'人時/日':'符合',r.oldFte.toFixed(1),r.newFte.toFixed(1),r.ptMonthHours.toFixed(1),money(r.base),money(r.newCost),(r.delta>=0?'+':'−')+money(Math.abs(r.delta)),(r.delta>=0?'+':'−')+money(Math.abs(r.delta*12))]);costBadge(tr.children[2],r.gaps||r.invalid?'is-warning':'is-good');costBadge(tr.children[8],costTone(r.delta));body.append(tr)}const foot=$('detailFoot');foot.replaceChildren();for(const [name,subrows] of [['外場合計',rows.filter(x=>x.kind==='foh')],['內場合計',rows.filter(x=>x.kind==='boh')],['全館合計',rows]]){const v=sumD(subrows),tr=el('tr');addCells(tr,[name,'',v.invalid?'班次設定異常':v.gaps?'缺口 '+v.gapHours.toFixed(1)+'人時/日':'符合',v.oldFte.toFixed(1),v.newFte.toFixed(1),v.ptMonthHours.toFixed(1),money(v.base),money(v.newCost),(v.delta>=0?'+':'−')+money(Math.abs(v.delta)),(v.delta>=0?'+':'−')+money(Math.abs(v.delta*12))]);costBadge(tr.children[2],v.gaps||v.invalid?"is-warning":"is-good");costBadge(tr.children[8],costTone(v.delta));foot.append(tr)}
 const chart=$('coverageCharts');chart.replaceChildren();rows.forEach(r=>{const area=el('div',{className:'detail-dept'});area.append(el('h3',{},r.name+'｜'+r.label));const wrap=el('div',{className:'tablewrap'}),table=el('table',{className:'coverage-table'}),thead=el('thead'),h=el('tr');for(const k of ['時段','需求','在場人數','差額'])h.append(el('th',{},k));thead.append(h);table.append(thead);const body=el('tbody');r.v.demand.forEach((need,j)=>{const have=r.cov[j],dif=have-need;if(need===0&&have===0)return;const tr=el('tr');addCells(tr,[DTIME(SLOT_START+j),String(need),String(have),(dif>0?'+':'')+String(dif)]);tr.lastChild.className=dif<0?'bad':dif>0?'good':'idle';body.append(tr)});table.append(body);wrap.append(table);area.append(wrap);chart.append(area)});
 const msg=$('detailDecision');msg.replaceChildren();let intro='依目前各餐廳內外場設定，現況月成本 '+money(t.base)+'，新制月成本 '+money(t.newCost)+'，年度增減 '+(t.delta>=0?'+':'−')+money(Math.abs(t.delta*12))+'。';msg.append(el('p',{},intro));msg.append(el('p',{className:t.gaps||t.invalid?'text-warning':'text-success'},t.invalid?'部分正職班非9小時（含1小時休息），或計時班設定錯誤，需修正才可採用此成本。':t.gaps?'目前仍有 '+t.gaps+' 個部門×半小時缺人時段，每天合計缺 '+t.gapHours.toFixed(1)+' 人時。請補足班次再評估成本。':'所有輸入的半小時在場需求皆已覆蓋；請再驗證開收餐、職能別、休假及法定要求。'));
 msg.append(el('p',{},'成本增減不含未輸入的獎金、特休與國定假日替補、跨部門支援、訓練及營運流程改變。自動建議只針對每部門設定的三個固定班型計算整數人數最低成本，沒有搜尋其他起迄時間，也不能替代法遵及實際逐人排班。'));
+appendTurnoverEffect(msg,t.delta*12,'詳細新制');
+investmentInsight(t.delta*12,0,'詳細新制');
+const notice=$('coverageInsight');
+notice.hidden=false;
+notice.classList.toggle('is-warning',t.gapHours>0||t.invalid);
+notice.classList.toggle('is-good',t.gapHours===0&&!t.invalid);
+notice.textContent=t.gapHours>0
+  ? '⚠️ 排班檢核提示：目前設定仍有 '+t.gapHours.toFixed(1)+' 小時的人力缺口（每日人時），現場可能面臨尖峰服務品質下降或超時加班風險，建議微調計時人員進場時段。'
+  : t.invalid
+    ? '⚠️ 排班檢核提示：有班次設定異常，請修正後再確認人力覆蓋。'
+    : '✅ 排班檢核通過：目前班次配置已 100% 覆蓋所有營業需求時段，可作為與現場主管溝通新班表的基準範本。';
 persistDetail()}
 function drawDetails(){const target=$('detailUnits');target.replaceChildren();for(const u of model.units)target.append(detailUnit(u));detailRecalc()}
 function setMode(v){activeMode=v;for(const node of document.querySelectorAll('.simple-only'))node.classList.toggle('hidden',v!=='simple');$('detailSection').classList.toggle('hidden',v!=='detail');$('simpleTab').classList.toggle('active',v==='simple');$('detailTab').classList.toggle('active',v==='detail');$('simpleTab').setAttribute('aria-selected',String(v==='simple'));$('detailTab').setAttribute('aria-selected',String(v==='detail'));$('modeDesc').textContent=v==='simple'?'簡易版：沿用午晚餐各4小時的快速假設，適合主管初步比較。':'詳細版：內外場獨立逐半小時需求、班次與休息時間，並檢查人力覆蓋、對比現況FTE。';$('mixedAdd').parentElement.querySelector('span').textContent=v==='simple'?'混合班制｜每月新增':'詳細新制｜每月增減';$('fullAdd').parentElement.querySelector('span').textContent=v==='simple'?'全正職制｜每月新增':'詳細新制｜每月總成本';$('mixedYear').parentElement.querySelector('span').textContent=v==='simple'?'混合班制｜每年新增':'詳細新制｜每年增減';if(v==='simple')originalResultRender();else drawDetails();try{sessionStorage.setItem('shift-active-mode-v12',v)}catch(e){}}
@@ -228,8 +302,8 @@ const SC_TYPES={
 };
 let scLatest=null;
 const scEl=id=>document.getElementById(id), scNum=id=>Number(scEl(id).value)||0;
-const scMoney=x=>Math.round(x).toLocaleString('zh-TW',{style:'currency',currency:'TWD',maximumFractionDigits:0});
-function scSettings(){return {type:scEl('scType').value,venue:scEl('scVenue').value,seats:Math.max(20,Math.min(1500,scNum('scSeats'))),days:scNum('scDays'),fohSalary:scNum('scFohSalary'),bohSalary:scNum('scBohSalary'),fohWage:scNum('scFohWage'),bohWage:scNum('scBohWage'),volume:scNum('scVolume')/100,service:scNum('scService')/100,kitchen:scNum('scKitchen')/100,core:scNum('scCore')/100,benefit:model.benefit/100,ptBenefit:model.ptBenefit/100};}
+const scMoney=money;
+function scSettings(){return {type:scEl('scType').value,venue:scEl('scVenue').value,seats:Math.max(20,Math.min(1500,scNum('scSeats'))),days:scNum('scDays'),fohSalary:scNum('scFohSalary'),bohSalary:scNum('scBohSalary'),fohWage:scNum('scFohWage'),bohWage:scNum('scBohWage'),volume:scNum('scVolume')/100,service:scNum('scService')/100,kitchen:scNum('scKitchen')/100,core:scNum('scCore')/100,benefit:model.benefit/100,ptBenefit:model.ptBenefit/100,splitAllowance:model.splitAllowance};}
 function scPeak(h,a,b){if(h>=a&&h<b)return 1;let distance=Math.min(Math.abs(h-a),Math.abs(h-b));return distance<=1?Math.max(0,1-distance):0}
 function scDemand(cfg,kind,weekend){const t=SC_TYPES[cfg.type],hotel=cfg.venue==='hotel',out=[];const weekendMultiplier=weekend?(cfg.type==='banquet'?1.26:hotel?1.14:1.25):1;const marketFactor=hotel?(cfg.type==='all'?1.12:1.04):1;
 for(let i=SC_START;i<SC_END;i++){
@@ -285,7 +359,7 @@ function scPlan(demand,cfg,kind){const cand=scCandidates(cfg,kind),needed=demand
 function scBaseline(demand){let max=0;for(const n of demand)max=Math.max(max,n);return max;}
 function scCompute(cfg){const t=SC_TYPES[cfg.type],weekdayCount=Math.min(cfg.days,5),weekendCount=Math.max(0,cfg.days-5),cases=[];
  for(const period of ['平日','假日'])for(const kind of ['foh','boh']){const demand=scDemand(cfg,kind,period==='假日'),plan=scPlan(demand,cfg,kind),dailyBaseline=scBaseline(demand);cases.push({period,kind,demand,plan,dailyBaseline,days:period==='平日'?weekdayCount:weekendCount});}
- const rows=cases.map(x=>{const salary=(x.kind==='foh'?cfg.fohSalary:cfg.bohSalary)*(1+cfg.benefit),wage=(x.kind==='foh'?cfg.fohWage:cfg.bohWage)*(1+cfg.ptBenefit);return {...x,baseFte:x.dailyBaseline*x.days/5,newFte:x.plan.full*x.days/5,ptWeek:x.plan.ptHours*x.days,baseCost:x.dailyBaseline*x.days/5*salary,newCost:x.plan.full*x.days/5*salary+x.plan.ptHours*x.days*52/12*wage};});
+ const rows=cases.map(x=>{const salary=(x.kind==='foh'?cfg.fohSalary:cfg.bohSalary)*(1+cfg.benefit),wage=(x.kind==='foh'?cfg.fohWage:cfg.bohWage)*(1+cfg.ptBenefit);return {...x,baseFte:x.dailyBaseline*x.days/5,newFte:x.plan.full*x.days/5,ptWeek:x.plan.ptHours*x.days,baseCost:x.dailyBaseline*x.days/5*(salary+cfg.splitAllowance),newCost:x.plan.full*x.days/5*salary+x.plan.ptHours*x.days*52/12*wage};});
  const sums=rows.reduce((a,r)=>{a.base+=r.baseCost;a.current+=r.newCost;a.oldFte+=r.baseFte;a.newFte+=r.newFte;a.pt+=r.ptWeek;a.gap+=r.plan.gap*r.days;return a},{base:0,current:0,oldFte:0,newFte:0,pt:0,gap:0});return {cfg,rows,sums,delta:sums.current-sums.base,t};}
 function scChart(rows){const wraps=scEl('scenarioChart');wraps.replaceChildren();const grid=document.createElement('div');grid.className='scenario-chart-grid';
  for(const r of rows){const b=document.createElement('div');b.className='scenario-chart-block';const head=document.createElement('h3');head.textContent=r.period+'｜'+(r.kind==='foh'?'外場':'內場');b.append(head);
@@ -297,14 +371,19 @@ function scChart(rows){const wraps=scEl('scenarioChart');wraps.replaceChildren()
 function scShow(report){const {cfg,rows,sums,delta,t}=report;scEl('scenarioResults').classList.remove('hidden');const deltaSign=delta>=0?'+':'−';scEl('scenarioHeadline').innerHTML=[['原兩頭班成本／月',scMoney(sums.base),'示範基準，非實際薪資表'],['新一頭班成本／月',scMoney(sums.current),'含正職與計時'],['每月成本增減',deltaSign+scMoney(Math.abs(delta)),sums.base?(delta/sums.base*100).toFixed(1)+'%':'—'],['年度成本增減',deltaSign+scMoney(Math.abs(delta*12)),'按12個月換算']].map(([a,b,c])=>'<div class="scenario-kpi"><span>'+a+'</span><b>'+b+'</b><small>'+c+'</small></div>').join('');
  const warning=sums.gap>0?'仍有每週 '+sums.gap.toFixed(1)+' 人時未覆蓋；這不是可直接實施的排班。':'模型逐30分鐘檢查：所有已設定時段的人力需求均被覆蓋。';
  scEl('scenarioNarrative').textContent=t.name+'｜'+(cfg.venue==='mall'?'商場':'飯店')+'｜'+cfg.seats+'席。平日'+Math.min(5,cfg.days)+'天／假日'+Math.max(0,cfg.days-5)+'天；需求與成本依天數加權。'+warning+' 正職最低工時比目標為'+Math.round(cfg.core*100)+'%，實際達成比例請看班次明細。';
- const tbody=scEl('scenarioRows');tbody.replaceChildren();for(const r of rows){const tr=document.createElement('tr');const values=[r.period+'／'+(r.kind==='foh'?'外場':'內場')+'（'+r.days+'天）',r.baseFte.toFixed(1),r.newFte.toFixed(1),r.ptWeek.toFixed(1),scMoney(r.baseCost),scMoney(r.newCost),(r.newCost>=r.baseCost?'+':'−')+scMoney(Math.abs(r.newCost-r.baseCost)),r.plan.gap>0?'缺 '+r.plan.gap.toFixed(1)+' 人時／日':'完整'];values.forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.append(td)});tbody.append(tr)}
+ const tbody=scEl('scenarioRows');tbody.replaceChildren();for(const r of rows){const tr=document.createElement('tr');const values=[r.period+'／'+(r.kind==='foh'?'外場':'內場')+'（'+r.days+'天）',r.baseFte.toFixed(1),r.newFte.toFixed(1),r.ptWeek.toFixed(1),scMoney(r.baseCost),scMoney(r.newCost),(r.newCost>=r.baseCost?'+':'−')+scMoney(Math.abs(r.newCost-r.baseCost)),r.plan.gap>0?'缺 '+r.plan.gap.toFixed(1)+' 人時／日':'完整'];values.forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.append(td)});costBadge(tr.children[6],costTone(r.newCost-r.baseCost));costBadge(tr.children[7],r.plan.gap>0?"is-warning":"is-good");tbody.append(tr)}
  scChart(rows);let shiftHtml='<div class="tablewrap"><table class="scenario-mini-table"><thead><tr><th>日期／部門</th><th>班別</th><th>工作起迄</th><th>休息時間</th><th>每日人數</th><th>每日有效人時</th></tr></thead><tbody>';for(const r of rows)for(const sh of r.plan.shifts){shiftHtml+='<tr><td>'+r.period+'／'+(r.kind==='foh'?'外場':'內場')+'</td><td>'+sh.type+'</td><td>'+DTIME(sh.start)+'–'+DTIME(sh.end)+'</td><td>'+(sh.breakStart===null?'—':DTIME(sh.breakStart)+'–'+DTIME(sh.breakStart+2))+'</td><td>'+sh.count+'</td><td>'+(sh.count*sh.hours).toFixed(1)+'</td></tr>';}shiftHtml+='</tbody></table></div>';scEl('scenarioShiftTable').innerHTML=shiftHtml;
  const avgCore=rows.filter(x=>x.days).map(x=>x.period+' '+(x.kind==='foh'?'外場':'內場')+Math.round(x.plan.coreAchieved*100)+'%').join('；');
  scEl('scenarioAssumptions').textContent='本情境依餐種設定營業時段、尖峰係數、每位服務人員／廚師承擔的參考客流，並依座位數、平假日、營業量、服務與料理複雜度產生需求。正職最低工時比例實際達成：'+avgCore+'。現況兩頭班成本以單日需求最大在場人數反推，未反映真實員工數；結果不含年終、假勤替補、員工餐、休假、加班、旺淡季、宴會實際場次、開店與收店要求以外的行政工作。建議以實際30分鐘來客、工時與員工名冊覆核。排班是貪婪式啟發法，不保證最低成本，亦未做個人層級勞基法排班查核。';
  scEl('scenarioRates').textContent='使用正職附加成本 '+(cfg.benefit*100).toLocaleString('zh-TW')+'%、計時附加成本 '+(cfg.ptBenefit*100).toLocaleString('zh-TW')+'%，計時成本每年以 52 週換算。附加成本可於簡易版或詳細版的共通成本假設調整。';
+ appendTurnoverEffect(scEl('scenarioNarrative'),delta*12,'情境新制');
+ investmentInsight(delta*12,0,'情境新制');
  scEl('scApply').disabled=false;scEl('scCsv').disabled=false;
 }
-function scSwitch(){activeMode='scenario';document.querySelectorAll('.simple-only').forEach(n=>n.classList.add('hidden'));scEl('detailSection').classList.add('hidden');scEl('scenarioSection').classList.remove('hidden');['simpleTab','detailTab','scenarioTab'].forEach(x=>{scEl(x).classList.toggle('active',x==='scenarioTab');scEl(x).setAttribute('aria-selected',String(x==='scenarioTab'))});scEl('modeDesc').textContent='情境版：先選餐種、場域、座位及服務權重，再按「執行模擬」，生成平假日內外場需求及新制成本。';scEl('overviewMetrics').classList.add('hidden');document.querySelector('#globalControls').closest('section').classList.add('hidden');try{sessionStorage.setItem('shift-active-mode-v13','scenario')}catch(e){};}
+function scSwitch(){activeMode='scenario';if(scLatest){
+  if(scLatest.cfg.splitAllowance!==model.splitAllowance)scLatest=scCompute({...scLatest.cfg,splitAllowance:model.splitAllowance});
+  scShow(scLatest);
+}else investmentInsight(0);document.querySelectorAll('.simple-only').forEach(n=>n.classList.add('hidden'));scEl('detailSection').classList.add('hidden');scEl('scenarioSection').classList.remove('hidden');['simpleTab','detailTab','scenarioTab'].forEach(x=>{scEl(x).classList.toggle('active',x==='scenarioTab');scEl(x).setAttribute('aria-selected',String(x==='scenarioTab'))});scEl('modeDesc').textContent='情境版：先選餐種、場域、座位及服務權重，再按「執行模擬」，生成平假日內外場需求及新制成本。';scEl('overviewMetrics').classList.add('hidden');document.querySelector('#globalControls').closest('section').classList.add('hidden');try{sessionStorage.setItem('shift-active-mode-v13','scenario')}catch(e){};}
 const scOldMode=setMode;setMode=function(v){scEl('scenarioSection').classList.add('hidden');scEl('overviewMetrics').classList.remove('hidden');document.querySelector('#globalControls').closest('section').classList.remove('hidden');scEl('scenarioTab').classList.remove('active');scEl('scenarioTab').setAttribute('aria-selected','false');scOldMode(v);try{sessionStorage.setItem('shift-active-mode-v13',v)}catch(e){}};
 scEl('scenarioTab').addEventListener('click',scSwitch);
 scEl('downloadCSV').addEventListener('click',event=>{
@@ -328,4 +407,5 @@ for(const k of ['foh','boh']){const r=scLatest.rows.find(r=>r.period==='平日'&
 try{const mode=sessionStorage.getItem('shift-active-mode-v13');if(mode==='scenario')scSwitch();else if(mode==='detail'||mode==='simple')setMode(mode)}catch(e){}
 syncScenarioActions();
 </script>
+<script src="currency.js"></script>
 <script src="language.js"></script></body></html>
